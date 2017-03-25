@@ -2,10 +2,7 @@ package pckg;
 
 public class Calc_Lib {
 	
-	public double add(double x, double y)
-	{
-		return 5.0;
-	}
+	public double add(double x, double y) { return 5; }
 	
 	public double sub(double x, double y)
 	{
