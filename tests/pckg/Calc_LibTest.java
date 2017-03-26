@@ -18,78 +18,138 @@ public class Calc_LibTest {
     @Before
     public void init(){
        calc = new Calc_Lib();
+
     }
 
     @Test
-    public void addDouble(){
+    public void add(){
         try{
             calc.add(Double.MAX_VALUE, 1);
             fail();
         } catch (Exception e){
-            final String expected = "Double overflow";
-            assertEquals(expected,e.getMessage());
+            final String expected = "Add overflow";
+            assertEquals(expected, e.getMessage());
         }
-        System.out.println(Double.MAX_VALUE);
 
         try{
             calc.add(Double.MIN_VALUE, -1);
             fail();
         } catch (Exception e){
-            final String expected = "Double underflow";
-            assertEquals(expected,e.getMessage());
+            final String expected = "Add underflow";
+            assertEquals(expected, e.getMessage());
         }
 
-        double add_result = calc.add(105.4,45.6);
-        Assert.assertEquals(151,add_result,0);
+        double result = calc.add(105.4,45.6);
+        Assert.assertEquals(151, result,0);
     }
 
-    @Test
-    public void addInt(){
-        try{
-            calc.add(Integer.MAX_VALUE, 1);
-            fail();
-        } catch (Exception e){
-            final String expected = "Integer overflow";
-            assertEquals(expected,e.getMessage());
-        }
 
-        try{
-            calc.add(Integer.MIN_VALUE, -1);
-            fail();
-        } catch (Exception e){
-            final String expected = "Integer underflow";
-            assertEquals(expected,e.getMessage());
-        }
-
-        double add_result = calc.add(107,103);
-        Assert.assertEquals(210,add_result,0);
-    }
     @Test
     public void sub() throws Exception {
+		try{
+			calc.sub(Double.MAX_VALUE, -1);
+			fail();
+		} catch (Exception e){
+			final String expected = "Sub overflow";
+			assertEquals(expected, e.getMessage());
+		}
+
+		try{
+			calc.sub(Double.MIN_VALUE, 1);
+			fail();
+		} catch (Exception e){
+			final String expected = "Sub underflow";
+			assertEquals(expected, e.getMessage());
+		}
+
+		double result = calc.sub(105.4,45.6);
+		Assert.assertEquals(59.8, result,0);
     }
+
 
     @Test
     public void mult() throws Exception {
+		try{
+			calc.mult(Double.MAX_VALUE, 2);
+			fail();
+		} catch (Exception e){
+			final String expected = "Mult overflow";
+			assertEquals(expected, e.getMessage());
+		}
+
+		double result = calc.mult(105.4,5);
+		Assert.assertEquals(527, result,0);
     }
 
     @Test
     public void divide() throws Exception {
+		try{
+			calc.mult(100, 0);
+			fail();
+		} catch (Exception e){
+			final String expected = "Dividing by zero";
+			assertEquals(expected, e.getMessage());
+		}
+
+		double result = calc.divide(105.4,6);
+		Assert.assertEquals(17.5668, result,0.0001);
+		Assert.assertEquals(17.5666, result,0.0001);
     }
 
     @Test
     public void factorial() throws Exception {
+		try{
+			calc.factorial(1000);
+			fail();
+		} catch (Exception e){
+			final String expected = "Factorial overflow";
+			assertEquals(expected, e.getMessage());
+		}
+
+		long result = calc.factorial(8);
+		Assert.assertEquals(40320, result);
     }
 
     @Test
     public void power() throws Exception {
-    }
+		try{
+			calc.power(Double.MAX_VALUE, 2);
+			fail();
+		} catch (Exception e){
+			final String expected = "Power overflow";
+			assertEquals(expected, e.getMessage());
+		}
+
+		double result = calc.power(8.5,5);
+		Assert.assertEquals(44370.53125, result,0.00001);
+	}
 
     @Test
     public void root() throws Exception {
+		try{
+			calc.root(-4, 2);
+			fail();
+		} catch (Exception e){
+			final String expected = "Root from negative number";
+			assertEquals(expected, e.getMessage());
+		}
+
+		double result = calc.root(8.2,3.1);
+		Assert.assertEquals(1.97141, result,0.00001);
     }
 
     @Test
     public void st_Dev() throws Exception {
-    }
+		double result;
+		result = calc.st_Dev("st_Dev_00.txt");
+		Assert.assertEquals(45.05729, result,0.00001);
 
+		try{
+			calc.st_Dev("st_Dev_01.txt");
+			fail();
+		} catch (Exception e){
+			final String expected = "Invalid input file";
+			assertEquals(expected, e.getMessage());
+		}
+	}
 }
