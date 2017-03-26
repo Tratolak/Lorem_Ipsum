@@ -22,20 +22,20 @@ public class CalcActionListener extends AbstractAction implements ActionListener
     public void actionPerformed(ActionEvent e) {
     	if(e.getSource() == Button1)
     	{
-    		Button1Pressed();
+    		button1Pressed();
     	}
     	else if(e.getSource() == Button2)
     	{
-    		Button2Pressed();
+    		button2Pressed();
     	}
     }
     
-    private void Button1Pressed()
+    private void button1Pressed()
     {
     	Lab1.setText(Lab1.getText() + "5");
     }
 
-    private void Button2Pressed()
+    private void button2Pressed()
     {
     	Lab1.setText(Lab1.getText() + "6");
     }
