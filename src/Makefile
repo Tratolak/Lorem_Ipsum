@@ -41,4 +41,4 @@ doc:
 
 # spustí program
 run:
-	cd ../bin/; java Calc_GUI
+	cd ../bin/; java Main_Window
