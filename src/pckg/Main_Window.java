@@ -17,9 +17,11 @@ public class Main_Window extends JFrame{
 	private static final long serialVersionUID = 1L;
 	
 	private JPanel contentPane;
-	public JButton Button1 = new JButton("Test");
-	public JLabel Lab1 = new JLabel("Label");
+	private JButton Button1 = new JButton("Test");
+	private JLabel Lab1 = new JLabel("");
 	private final JButton Button2 = new JButton("New button");
+	
+	private CalcActionListener ActionListener = new CalcActionListener(Lab1, Button1, Button2);
 
 	/**
 	 * Launch the application.
@@ -47,7 +49,11 @@ public class Main_Window extends JFrame{
 		contentPane = new JPanel();
 		contentPane.setFocusable(true);
 		
-		contentPane.addKeyListener(new CalcKeyListener(Lab1));
+        // HERE ARE THE KEY BINDINGS
+		Button1.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put( KeyStroke.getKeyStroke( "NUMPAD5" ), "doNum5Action" );
+		Button1.getActionMap().put( "doNum5Action", ActionListener );
+		Button2.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put( KeyStroke.getKeyStroke( "NUMPAD6" ), "doNum6Action" );
+		Button2.getActionMap().put( "doNum6Action", ActionListener );
 		
 		contentPane.setBorder(new EmptyBorder(0, 0, 0, 0));
 		setContentPane(contentPane);
@@ -57,7 +63,9 @@ public class Main_Window extends JFrame{
 		contentPane.add(Button2, BorderLayout.WEST);
 		contentPane.add(Lab1, BorderLayout.NORTH);
 		
-		Button1.addActionListener(new CalcActionListener(Lab1, Button1, Button2));
-		Button2.addActionListener(new CalcActionListener(Lab1, Button1, Button2));
+		Button1.addActionListener(ActionListener);
+		Button2.addActionListener(ActionListener);
 	}
 }
+
+

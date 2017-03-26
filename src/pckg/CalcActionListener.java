@@ -4,12 +4,14 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.*;
 
-public class CalcActionListener implements ActionListener{
 
-    private JLabel Lab1;
+public class CalcActionListener extends AbstractAction implements ActionListener{
+
+	private static final long serialVersionUID = 1L;
+	
+	private JLabel Lab1;
     private JButton Button1;
     private JButton Button2;
-    //...
 
     public CalcActionListener(JLabel lab1, JButton button1, JButton button2){
         this.Lab1 = lab1;
@@ -30,11 +32,11 @@ public class CalcActionListener implements ActionListener{
     
     private void Button1Pressed()
     {
-    	Lab1.setText("Button1 was pressed!");
+    	Lab1.setText(Lab1.getText() + "5");
     }
 
     private void Button2Pressed()
     {
-    	Lab1.setText("Button2 was pressed!");
+    	Lab1.setText(Lab1.getText() + "6");
     }
 }
