@@ -84,7 +84,7 @@ public class Calc_LibTest {
     @Test
     public void divide() throws Exception {
 		try{
-			calc.mult(100, 0);
+			calc.divide(100, 0);
 			fail();
 		} catch (Exception e){
 			final String expected = "Dividing by zero";
