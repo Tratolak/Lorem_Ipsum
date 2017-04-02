@@ -22,9 +22,9 @@ public class Calc_LibTest {
     }
 
     @Test
-    public void add(){
+    public void add() throws Exception{
         try{
-            calc.add(Double.MAX_VALUE, 1);
+            calc.add(Double.MAX_VALUE, Double.MAX_VALUE);
             fail();
         } catch (Exception e){
             final String expected = "Add overflow";
@@ -32,22 +32,22 @@ public class Calc_LibTest {
         }
 
         try{
-            calc.add(Double.MIN_VALUE, -1);
+            calc.add(-Double.MAX_VALUE, -Double.MAX_VALUE);
             fail();
         } catch (Exception e){
-            final String expected = "Add underflow";
+            final String expected = "Add overflow";
             assertEquals(expected, e.getMessage());
         }
 
-        double result = calc.add(105.4,45.6);
-        Assert.assertEquals(151, result,0);
+        double result = calc.add(-105.4,45.6);
+        Assert.assertEquals(-59.8, result,0.0001);
     }
 
 
     @Test
     public void sub() throws Exception {
 		try{
-			calc.sub(Double.MAX_VALUE, -1);
+			calc.sub(-Double.MAX_VALUE, Double.MAX_VALUE);
 			fail();
 		} catch (Exception e){
 			final String expected = "Sub overflow";
@@ -55,15 +55,15 @@ public class Calc_LibTest {
 		}
 
 		try{
-			calc.sub(Double.MIN_VALUE, 1);
+			calc.sub(Double.MAX_VALUE, -Double.MAX_VALUE);
 			fail();
 		} catch (Exception e){
-			final String expected = "Sub underflow";
+			final String expected = "Sub overflow";
 			assertEquals(expected, e.getMessage());
 		}
 
 		double result = calc.sub(105.4,45.6);
-		Assert.assertEquals(59.8, result,0);
+		Assert.assertEquals(59.8, result,0.0001);
     }
 
 
@@ -71,6 +71,13 @@ public class Calc_LibTest {
     public void mult() throws Exception {
 		try{
 			calc.mult(Double.MAX_VALUE, 2);
+			fail();
+		} catch (Exception e){
+			final String expected = "Mult overflow";
+			assertEquals(expected, e.getMessage());
+		}
+		try{
+			calc.mult(Double.MAX_VALUE, -2);
 			fail();
 		} catch (Exception e){
 			final String expected = "Mult overflow";
@@ -114,6 +121,13 @@ public class Calc_LibTest {
     public void power() throws Exception {
 		try{
 			calc.power(Double.MAX_VALUE, 2);
+			fail();
+		} catch (Exception e){
+			final String expected = "Power overflow";
+			assertEquals(expected, e.getMessage());
+		}
+		try{
+			calc.power(-Double.MAX_VALUE, 3);
 			fail();
 		} catch (Exception e){
 			final String expected = "Power overflow";
