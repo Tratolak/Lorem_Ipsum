@@ -1,0 +1,48 @@
+﻿Projekt je rozdělen do 3 etap.
+Celkový čas na projekt je 5 týdnů, pričemž 1 týden je ponechán na řešení komplikací a finalizace.
+K většině úlohám je přirazen člen týmu a jeho pomocník, avšak není to pravidlem.
+První zapsaný člen zodpovídá za zpracování úlohy. 
+
+####################################################################################
+	1. Etapa	20. 3. - 27. 3.
+####################################################################################
+
+Návrh rozhrání:					Martin Stodůlka
+Makefile(kompletní: all, test, doc):		Jan Švanda, Ondřej Olšák
+Testy(úpravy a doplňování testů v 2. etapě):	Ondřej Olšák, Michael Schneider, (Jan Švanda)
+Návrh GUI(vzhled okna, rozvržení tlačítek,...):	Michael Schneider, Ondřej Olšák
+	
+####################################################################################
+	2. Etapa	27. 3. - 10. 4.
+####################################################################################
+
+Mat. Knihovna
+	+-*/, faktoriál, mocnina, odmoc.:	Jan Švanda, Ondřej Olšák
+
+	Profiling(směrodat. odchylka):		Martin Stodůlka
+
+GUI:						Michael Schneider, Ondřej Olšák
+Kontrola Dokumentace:				Ondřej Olšák, Jan Švanda
+
+####################################################################################
+	3. Etapa	10. 4. - 17. 4.
+####################################################################################	
+
+Nápověda(built-in):				Ondřej Olšák, Jan Švanda
+(Od)Instalátor:					Michael Schneider
+Readme:						Jan Švanda, Martin Stodůlka
+
+Uživatelská Příručka
+(návod k instalaci, použití, atd.):		Martin Stodůlka, Ondřej Olšák
+
+####################################################################################
+####################################################################################
+
+Komunikační kanály odsouhlasené všemi členy skupiny jsou následující:
+		- skype (především pro rychlou konzultaci aktuálních problémů)
+		- předem naplánovaná osobní setkaní (hodnocení předešlích a následujících vývojových etap)
+
+Pro zprávu verzí byl zvolen Git s hostingem na GitHubu. 
+Do repozitáře je možno nahlédnou přes link: "https://github.com/Tratolak/Lorem_Ipsum". Projekt je zveřejněn
+pod licencí GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007, tudíž je volně přístupný všem zájemcům. 	
+
