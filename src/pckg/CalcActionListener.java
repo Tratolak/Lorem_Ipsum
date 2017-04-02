@@ -1,11 +1,17 @@
 package pckg;
 
-import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.*;
 
-
-public class CalcActionListener extends AbstractAction implements ActionListener{
+/**
+ * \class CalcActionListener
+ *
+ * \brief Tøída pro zpracování signálù
+ *
+ * Zpracovává signály od GUI a volá patøièné metody.
+ *
+ */
+public class CalcActionListener extends AbstractAction{
 
 	private static final long serialVersionUID = 1L;
 	
@@ -13,12 +19,18 @@ public class CalcActionListener extends AbstractAction implements ActionListener
     private JButton Button1;
     private JButton Button2;
 
+    /**
+     * Konstruktor
+     */
     public CalcActionListener(JLabel lab1, JButton button1, JButton button2){
         this.Lab1 = lab1;
         this.Button1 = button1;
         this.Button2 = button2;
     }
-
+    
+    /**
+     * Odchytávaè signálù
+     */
     public void actionPerformed(ActionEvent e) {
     	if(e.getSource() == Button1)
     	{
