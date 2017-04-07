@@ -2,8 +2,8 @@ package pckg;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
-//import java.awt.event.ActionListener;
-//import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.GroupLayout.Alignment;
@@ -13,8 +13,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.ActionEvent;
 import java.awt.Scrollbar;
-//import javax.swing.border.LineBorder;
-//import java.awt.Color;
+import javax.swing.border.LineBorder;
+import java.awt.Color;
 
 
 
@@ -36,12 +36,15 @@ public class Main_Window extends JFrame{
 	
 	
 	public class ComponentContainer {
-		public JButton b1 = Button1;
-		public JButton b2 = button_2;
-		public JTextArea tA = textArea;
+		public JButton b1;
+		public JButton b2;
+		public JTextArea tA;
 		}
 	
-	private ComponentContainer comc= new ComponentContainer();
+	
+	private ComponentContainer comc = new ComponentContainer();
+	
+	comc = this.button_2;
 	
 	private JPanel contentPane;
 	private JButton Button1 = new JButton("=");
@@ -88,17 +91,13 @@ public class Main_Window extends JFrame{
 			}
 		});
 	}
-	public void KeyPressed (KeyEvent e){
-		
-		
-	}
 	/**
 	 * Vytvoøení frame a inicializace signálù
 	 */
 	public Main_Window() {
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 700);
+		setBounds(100, 100, 415, 700);
 		
 		contentPane = new JPanel();
 		

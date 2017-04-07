@@ -26,7 +26,7 @@ public class CalcActionListener extends AbstractAction{
     	this.tA = container.tA;
     	this.b1 = container.b1;
         this.b2 = container.b2;
-       
+        System.out.print(this.b2);
     }
     
     /**
@@ -34,17 +34,22 @@ public class CalcActionListener extends AbstractAction{
      */
     public void actionPerformed(ActionEvent e) {
     	
+    	System.out.print(e.getSource().equals(b2));
+    	
     	if(e.getSource() == b1)
     	{
     		rovnasePressed();
     	}
-    	else if(e.getActionCommand() == "+")
+    	else if(e.getSource().equals(b1))
     	{
-    		System.out.print("cokoli");
-    		//plusPressed();
+    		plusPressed();
+    	}
+    	else if(e.getSource().equals(b1))
+    	{
+    		plusPressed();
     	}
     	else{
-    		System.out.print(e.getActionCommand());
+    		
     	}
     }
     
