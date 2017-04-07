@@ -126,16 +126,18 @@ public class Calc_LibTest {
 			final String expected = "Power overflow";
 			assertEquals(expected, e.getMessage());
 		}
-		try{
-			calc.power(-Double.MAX_VALUE, 3);
-			fail();
-		} catch (Exception e){
-			final String expected = "Power overflow";
-			assertEquals(expected, e.getMessage());
-		}
 
-		double result = calc.power(8.5,5);
-		Assert.assertEquals(44370.53125, result,0.00001);
+		double result = calc.power(8.5,5.1);
+		Assert.assertEquals(54958.70883, result,0.00001);
+
+		result = calc.power(-4.5,4);
+		Assert.assertEquals(410.0625, result,0.00001);
+
+		result = calc.power(-8.5,5);
+		Assert.assertEquals(-44370.53125, result,0.00001);
+
+		result = calc.power(-8.5,5.4);
+		Assert.assertEquals(Double.NaN, result,0);
 	}
 
     @Test
@@ -147,9 +149,19 @@ public class Calc_LibTest {
 			final String expected = "Root from negative number";
 			assertEquals(expected, e.getMessage());
 		}
+		try{
+			calc.root(4, 0);
+			fail();
+		} catch (Exception e){
+			final String expected = "Can't count zero root";
+			assertEquals(expected, e.getMessage());
+		}
 
-		double result = calc.root(8.2,3.1);
-		Assert.assertEquals(1.97141, result,0.00001);
+		double result = calc.root(0,4);
+		Assert.assertEquals(0, result,0);
+
+		result = calc.root(8.2,-3.1);
+		Assert.assertEquals(0.507249, result,0.00001);
     }
 
     @Test
