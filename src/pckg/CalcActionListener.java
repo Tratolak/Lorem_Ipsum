@@ -15,40 +15,46 @@ public class CalcActionListener extends AbstractAction{
 
 	private static final long serialVersionUID = 1L;
 	
-	private JLabel Lab1;
-    private JButton Button1;
-    private JButton Button2;
+	private JButton b1;
+	private JButton b2;
+	private JTextArea tA;
 
     /**
      * Konstruktor
      */
-    public CalcActionListener(JLabel lab1, JButton button1, JButton button2){
-        this.Lab1 = lab1;
-        this.Button1 = button1;
-        this.Button2 = button2;
+    public CalcActionListener( Main_Window.ComponentContainer container){
+    	this.tA = container.tA;
+    	this.b1 = container.b1;
+        this.b2 = container.b2;
+       
     }
     
     /**
      * Odchytávaè signálù
      */
     public void actionPerformed(ActionEvent e) {
-    	if(e.getSource() == Button1)
+    	
+    	if(e.getSource() == b1)
     	{
-    		button1Pressed();
+    		rovnasePressed();
     	}
-    	else if(e.getSource() == Button2)
+    	else if(e.getActionCommand() == "+")
     	{
-    		button2Pressed();
+    		System.out.print("cokoli");
+    		//plusPressed();
+    	}
+    	else{
+    		System.out.print(e.getActionCommand());
     	}
     }
     
-    private void button1Pressed()
+    private void rovnasePressed()
     {
-    	Lab1.setText(Lab1.getText() + "5");
+    	
     }
 
-    private void button2Pressed()
+    private void plusPressed()
     {
-    	Lab1.setText(Lab1.getText() + "6");
+    	tA.setText(tA.getText() + "+");
     }
 }
