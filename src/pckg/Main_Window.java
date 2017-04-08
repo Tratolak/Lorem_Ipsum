@@ -35,46 +35,70 @@ public class Main_Window extends JFrame{
 	private static final long serialVersionUID = 1L;
 	
 	
-	public class ComponentContainer {
-		public JButton b1;
-		public JButton b2;
-		public JTextArea tA;
-		}
-	
-	
-	private ComponentContainer comc = new ComponentContainer();
-	
-	comc = this.button_2;
+	public class ComponentContainer
+	 {
+		public JButton btnrov;
+		public JButton btnplus;
+		public JButton btn0;
+		public JButton btnneg;
+		public JButton button_16;
+		public JButton btnminus;
+		public JButton btnC;
+		public JButton btn2;
+		public JButton btn1;
+		public JButton btn3;
+		public JButton btn6;
+		public JButton btn5;
+		public JButton btn4;
+		public JButton btn7;
+		public JButton btn8;
+		public JButton btn9;
+		public JButton btnDel;
+		public JButton btnod;
+		public JButton btnmoc;
+		public JButton button_19;
+		public JButton button_20;
+		public JButton button_21;
+		public JButton btnfakt;
+		public JButton btndeleno;
+		public JButton btnkrat;
+		public JTextField priklad;
+		public JTextField vysledek;   
+	 }
+
+	private Main_Window.ComponentContainer CompContainer = new Main_Window.ComponentContainer();
 	
 	private JPanel contentPane;
-	private JButton Button1 = new JButton("=");
-	private JButton button_2 = new JButton("+");
-	private JTextArea textArea = new JTextArea();
-	private JButton button_14 = new JButton("0");
-	private JButton button_15 = new JButton("- / +");
+	private JButton btnrov = new JButton("=");
+	private JButton btnplus = new JButton("+");
+	private JButton btn0 = new JButton("0");
+	private JButton btnneg = new JButton("- / +");
 	private JButton button_16 = new JButton("New button");
-	private JButton button_17 = new JButton("-");
-	private JButton btnDel = new JButton("del");
-	private JButton button_4 = new JButton("2");
-	private JButton button_1 = new JButton("1");
-	private JButton button_5 = new JButton("3");
-	private JButton button_6 = new JButton("6");
-	private JButton button_7 = new JButton("5");
-	private JButton button_8 = new JButton("4");
-	private JButton button_9 = new JButton("7");
-	private JButton button_10 = new JButton("8");
-	private JButton button_11 = new JButton("9");
-	private JButton button_12 = new JButton("New button");
-	private JButton button_13 = new JButton("New button");
-	private JButton button_18 = new JButton("New button");
+	private JButton btnminus = new JButton("-");
+	private JButton btnC = new JButton("C");
+	private JButton btn2 = new JButton("2");
+	private JButton btn1 = new JButton("1");
+	private JButton btn3 = new JButton("3");
+	private JButton btn6 = new JButton("6");
+	private JButton btn5 = new JButton("5");
+	private JButton btn4 = new JButton("4");
+	private JButton btn7 = new JButton("7");
+	private JButton btn8 = new JButton("8");
+	private JButton btn9 = new JButton("9");
+	private JButton btnDel = new JButton("DEL");
+	private JButton btnod = new JButton("√");
+	private JButton btnmoc = new JButton("x^2");
 	private JButton button_19 = new JButton("New button");
 	private JButton button_20 = new JButton("New button");
 	private JButton button_21 = new JButton("New button");
-	private JButton btnC = new JButton("C");
-	private JButton button_23 = new JButton("/");
-	private JButton button_24 = new JButton("*");
+	private JButton btnfakt = new JButton("!");
+	private JButton btndeleno = new JButton("/");
+	private JButton btnkrat = new JButton("*");
+	private JTextField priklad = new JTextField();
+	private JTextField vysledek = new JTextField();
 	
-	private CalcActionListener ActionListener = new CalcActionListener(comc);
+	private CalcActionListener ActionListener;
+	private final JScrollPane scrollPane = new JScrollPane();
 
 	/**
 	 * Spuštìní aplikace
@@ -99,126 +123,206 @@ public class Main_Window extends JFrame{
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 415, 700);
 		
+		
+		CompContainer.btnrov = btnrov;
+		CompContainer.btnplus = btnplus;
+		CompContainer.btn0 = btn0;
+		CompContainer.btnneg = btnneg;
+		CompContainer.button_16 = button_16;
+		CompContainer.btnminus = btnminus;
+		CompContainer.btnC = btnC ;
+		CompContainer.btn2 = btn2;
+		CompContainer.btn1 = btn1;
+		CompContainer.btn3 = btn3;
+		CompContainer.btn6 = btn6;
+		CompContainer.btn5 = btn5;
+		CompContainer.btn4 = btn4;
+		CompContainer.btn7 = btn7;
+		CompContainer.btn8 = btn8;
+		CompContainer.btn9 = btn9;
+		CompContainer.btnDel = btnDel;
+		CompContainer.btnod = btnod;
+		CompContainer.btnmoc = btnmoc;
+		CompContainer.button_19 = button_19;
+		CompContainer.button_20 = button_20;
+		CompContainer.button_21 = button_21;
+		CompContainer.btnfakt = btnfakt;
+		CompContainer.btndeleno = btndeleno;
+		CompContainer.btnkrat = btnkrat;
+		CompContainer.priklad = priklad;
+		CompContainer.vysledek = vysledek;  
+		
+		ActionListener = new CalcActionListener(CompContainer);
+	
+		
+		
+		
+		
+		
 		contentPane = new JPanel();
 		
-		Button1.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put( KeyStroke.getKeyStroke( "NUMPAD5" ), "doNum5Action" );
-	 	Button1.getActionMap().put( "doNum5Action", ActionListener );
-		Button1.setBounds(310, 528, 90, 130);
-		Button1.setFont(new Font("Tahoma", Font.PLAIN, 40));
-		Button1.addActionListener(ActionListener);
+		btnrov.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put( KeyStroke.getKeyStroke( "NUMPAD5" ), "doNum5Action" );
+	 	btnrov.getActionMap().put( "doNum5Action", ActionListener );
+		btnrov.setBounds(310, 528, 90, 130);
+		btnrov.setFont(new Font("Tahoma", Font.PLAIN, 40));
+		btnrov.addActionListener(ActionListener);
 		
 		contentPane.setBorder(new EmptyBorder(0, 0, 0, 0));
 		setContentPane(contentPane);
+		btnplus.setFont(new Font("Tahoma", Font.PLAIN, 30));
 		
 		
 		
-		textArea.setEditable(false);
-		textArea.setRows(2);
-		textArea.setFont(new Font("Tahoma", Font.PLAIN, 30));
-		textArea.setBounds(10, 10, 390, 102);
-		
-		
-		
-		button_2.setBounds(310, 386, 90, 131);
-		button_2.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put( KeyStroke.getKeyStroke( "ADD" ), "numplus" );
-		button_2.getActionMap().put( "numplus", ActionListener );
-		button_2.addActionListener(ActionListener);
+		btnplus.setBounds(310, 386, 90, 131);
+		btnplus.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put( KeyStroke.getKeyStroke( "ADD" ), "numplus" );
+		btnplus.getActionMap().put( "numplus", ActionListener );
+		btnplus.addActionListener(ActionListener);
 		
 		contentPane.setLayout(null);
-		contentPane.add(Button1);
-		contentPane.add(textArea);
-		contentPane.add(button_2);
+		contentPane.add(btnrov);
+		contentPane.add(btnplus);
+		btn0.setFont(new Font("Tahoma", Font.PLAIN, 30));
 		
 		
-		button_14.setBounds(10, 599, 190, 60);
-		contentPane.add(button_14);
+		btn0.setBounds(10, 599, 190, 60);
+		contentPane.add(btn0);
+		btnneg.setFont(new Font("Tahoma", Font.PLAIN, 27));
 		
 		
-		button_15.setBounds(210, 599, 90, 60);
-		contentPane.add(button_15);
+		btnneg.setBounds(210, 599, 90, 60);
+		contentPane.add(btnneg);
 		
-		button_16.setBounds(310, 204, 90, 60);
+		button_16.setBounds(310, 216, 90, 60);
 		contentPane.add(button_16);
+		btnminus.setFont(new Font("Tahoma", Font.PLAIN, 30));
 		
 		
-		button_17.setBounds(310, 315, 90, 60);
-		contentPane.add(button_17);
+		btnminus.setBounds(310, 315, 90, 60);
+		contentPane.add(btnminus);
+		btnC.setFont(new Font("Tahoma", Font.PLAIN, 30));
 		
 		
-		btnDel.setBounds(310, 133, 90, 60);
-		contentPane.add(btnDel);
+		btnC.setBounds(310, 145, 90, 60);
+		contentPane.add(btnC);
+		btn1.setFont(new Font("Tahoma", Font.PLAIN, 30));
 		
 		
 			
-		button_1.setBounds(10, 528, 90, 60);
-		contentPane.add(button_1);
+		btn1.setBounds(10, 528, 90, 60);
+		contentPane.add(btn1);
+		btn2.setFont(new Font("Tahoma", Font.PLAIN, 30));
 		
 		
-		button_4.setBounds(110, 528, 90, 60);
-		contentPane.add(button_4);
+		btn2.setBounds(110, 528, 90, 60);
+		contentPane.add(btn2);
+		btn3.setFont(new Font("Tahoma", Font.PLAIN, 30));
 		
 		
-		button_5.setBounds(210, 528, 90, 60);
-		contentPane.add(button_5);
+		btn3.setBounds(210, 528, 90, 60);
+		contentPane.add(btn3);
+		btn6.setFont(new Font("Tahoma", Font.PLAIN, 30));
 		
 		
-		button_6.setBounds(210, 457, 90, 60);
-		contentPane.add(button_6);
+		btn6.setBounds(210, 457, 90, 60);
+		contentPane.add(btn6);
+		btn5.setFont(new Font("Tahoma", Font.PLAIN, 30));
 		
 		
-		button_7.setBounds(110, 457, 90, 60);
-		contentPane.add(button_7);
+		btn5.setBounds(110, 457, 90, 60);
+		contentPane.add(btn5);
+		btn4.setFont(new Font("Tahoma", Font.PLAIN, 30));
 		
 		
-		button_8.setBounds(10, 457, 90, 60);
-		contentPane.add(button_8);
+		btn4.setBounds(10, 457, 90, 60);
+		contentPane.add(btn4);
+		btn7.setFont(new Font("Tahoma", Font.PLAIN, 30));
 		
 		
-		button_9.setBounds(10, 386, 90, 60);
-		contentPane.add(button_9);
+		btn7.setBounds(10, 386, 90, 60);
+		contentPane.add(btn7);
+		btn8.setFont(new Font("Tahoma", Font.PLAIN, 30));
 		
 		
-		button_10.setBounds(110, 386, 90, 60);
-		contentPane.add(button_10);
+		btn8.setBounds(110, 386, 90, 60);
+		contentPane.add(btn8);
+		btn9.setFont(new Font("Tahoma", Font.PLAIN, 30));
 		
 		
-		button_11.setBounds(210, 386, 90, 60);
-		contentPane.add(button_11);
+		btn9.setBounds(210, 386, 90, 60);
+		contentPane.add(btn9);
+		btnDel.setFont(new Font("Tahoma", Font.PLAIN, 30));
 		
 		
-		button_12.setBounds(210, 133, 90, 60);
-		contentPane.add(button_12);
+		btnDel.setBounds(210, 145, 90, 60);
+		contentPane.add(btnDel);
+		btnod.setFont(new Font("Tahoma", Font.PLAIN, 30));
 		
 		
-		button_13.setBounds(110, 133, 90, 60);
-		contentPane.add(button_13);
+		btnod.setBounds(110, 145, 90, 60);
+		contentPane.add(btnod);
+		btnmoc.setFont(new Font("Tahoma", Font.PLAIN, 30));
 		
 		
-		button_18.setBounds(10, 133, 90, 60);
-		contentPane.add(button_18);
+		btnmoc.setBounds(10, 145, 90, 60);
+		contentPane.add(btnmoc);
 		
 		
-		button_19.setBounds(10, 204, 90, 60);
+		button_19.setBounds(10, 216, 90, 60);
 		contentPane.add(button_19);
 		
 		
-		button_20.setBounds(110, 204, 90, 60);
+		button_20.setBounds(110, 216, 90, 60);
 		contentPane.add(button_20);
 		
 		
-		button_21.setBounds(210, 204, 90, 60);
+		button_21.setBounds(210, 216, 90, 60);
 		contentPane.add(button_21);
+		btnfakt.setFont(new Font("Tahoma", Font.PLAIN, 30));
 		
 		
-		btnC.setBounds(10, 315, 90, 60);
-		contentPane.add(btnC);
+		btnfakt.setBounds(10, 315, 90, 60);
+		contentPane.add(btnfakt);
+		btndeleno.setFont(new Font("Tahoma", Font.PLAIN, 30));
 		
 		
-		button_23.setBounds(110, 315, 90, 60);
-		contentPane.add(button_23);
+		btndeleno.setBounds(110, 315, 90, 60);
+		contentPane.add(btndeleno);
+		btnkrat.setFont(new Font("Tahoma", Font.PLAIN, 30));
 		
 		
-		button_24.setBounds(210, 315, 90, 60);
-		contentPane.add(button_24);
+		btnkrat.setBounds(210, 315, 90, 60);
+		contentPane.add(btnkrat);
+		priklad.setEditable(false);
+		priklad.setFont(new Font("Tahoma", Font.PLAIN, 26));
+		priklad.setBackground(Color.WHITE);
+		priklad.setForeground(Color.BLACK);
+		priklad.setBounds(31, 11, 389, 40);
+		priklad.setBorder(javax.swing.BorderFactory.createEmptyBorder());
+		
+		JScrollPane scroll = new JScrollPane (priklad, ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		scroll.setBounds(10, 11, 390, 60);
+		scroll.setBorder(javax.swing.BorderFactory.createEmptyBorder());
+		contentPane.add(scroll);
+		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
+		scrollPane.setBounds(10, 70, 389, 60);
+		scrollPane.setBorder(javax.swing.BorderFactory.createEmptyBorder());
+		contentPane.add(scrollPane);
+		
+		
+		
+		
+		scrollPane.setViewportView(vysledek);
+		
+	
+
+		vysledek.setBackground(Color.WHITE);
+		vysledek.setFont(new Font("Tahoma", Font.PLAIN, 27));
+		vysledek.setHorizontalAlignment(SwingConstants.TRAILING);
+		vysledek.setColumns(10);
+		vysledek.setBorder(javax.swing.BorderFactory.createEmptyBorder());
+		vysledek.setEditable(false);
+		
+		
+		
 	}
 }

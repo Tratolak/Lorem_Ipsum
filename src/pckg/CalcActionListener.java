@@ -15,18 +15,13 @@ public class CalcActionListener extends AbstractAction{
 
 	private static final long serialVersionUID = 1L;
 	
-	private JButton b1;
-	private JButton b2;
-	private JTextArea tA;
+	Main_Window.ComponentContainer Components;
 
     /**
      * Konstruktor
      */
     public CalcActionListener( Main_Window.ComponentContainer container){
-    	this.tA = container.tA;
-    	this.b1 = container.b1;
-        this.b2 = container.b2;
-        System.out.print(this.b2);
+    	Components = container;
     }
     
     /**
@@ -34,19 +29,20 @@ public class CalcActionListener extends AbstractAction{
      */
     public void actionPerformed(ActionEvent e) {
     	
-    	System.out.print(e.getSource().equals(b2));
+    	//System.out.print(e.getSource().equals(b2));
     	
-    	if(e.getSource() == b1)
+    	if(e.getSource().equals(Components.btnrov))
     	{
     		rovnasePressed();
     	}
-    	else if(e.getSource().equals(b1))
+    	else if(e.getSource().equals(Components.btnplus))
     	{
+    		System.out.print("huraplus");
     		plusPressed();
     	}
-    	else if(e.getSource().equals(b1))
+    	else if(e.getSource().equals(Components.btn0))
     	{
-    		plusPressed();
+    		 
     	}
     	else{
     		
@@ -60,6 +56,6 @@ public class CalcActionListener extends AbstractAction{
 
     private void plusPressed()
     {
-    	tA.setText(tA.getText() + "+");
+    	Components.priklad.setText(Components.priklad.getText() + "+");
     }
 }
