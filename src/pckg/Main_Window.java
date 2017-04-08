@@ -34,6 +34,14 @@ public class Main_Window extends JFrame{
 
 	private static final long serialVersionUID = 1L;
 	
+	/**
+	 * \class ComponentContainer
+	 *
+	 * \brief Třída pro předaní tlačítek action listeneru
+	 *
+	 * Rato třída slouží pouze jako container pro předaní.
+	 *
+	 */
 	
 	public class ComponentContainer
 	 {
@@ -199,6 +207,7 @@ public class Main_Window extends JFrame{
 		
 		btnodch.setFont(new Font("Tahoma", Font.PLAIN, 30));		
 		btnodch.setBounds(210, 216, 90, 60);
+		btnodch.addActionListener(ActionListener);
 		contentPane.add(btnodch);
 		
 		btnminus.setFont(new Font("Tahoma", Font.PLAIN, 30));		
@@ -300,30 +309,37 @@ public class Main_Window extends JFrame{
 		
 		btnodm2.setFont(new Font("Tahoma", Font.PLAIN, 30));	
 		btnodm2.setBounds(110, 145, 90, 60);
+		btnodm2.addActionListener(ActionListener);
 		contentPane.add(btnodm2);
 		
 		btnmoc2.setFont(new Font("Tahoma", Font.PLAIN, 30));
 		btnmoc2.setBounds(10, 145, 90, 60);
+		btnmoc2.addActionListener(ActionListener);
 		contentPane.add(btnmoc2);
-		btnmocn.setFont(new Font("Tahoma", Font.PLAIN, 30));
 		
 		
+		
+		btnmocn.setFont(new Font("Tahoma", Font.PLAIN, 30));	
 		btnmocn.setBounds(10, 216, 90, 60);
+		btnmocn.addActionListener(ActionListener);
 		contentPane.add(btnmocn);
-		btnodmocn.setFont(new Font("Tahoma", Font.PLAIN, 30));
 		
 		
+		btnodmocn.setFont(new Font("Tahoma", Font.PLAIN, 30));		
 		btnodmocn.setBounds(110, 216, 90, 60);
+		btnodmocn.addActionListener(ActionListener);
 		contentPane.add(btnodmocn);
-		btnAns.setFont(new Font("Tahoma", Font.PLAIN, 30));
 		
 		
+		btnAns.setFont(new Font("Tahoma", Font.PLAIN, 30));		
 		btnAns.setBounds(310, 216, 90, 60);
+		btnAns.addActionListener(ActionListener);
 		contentPane.add(btnAns);
+		
+		
 		btnfakt.setFont(new Font("Tahoma", Font.PLAIN, 30));
-		
-		
 		btnfakt.setBounds(10, 315, 90, 60);
+		btnfakt.addActionListener(ActionListener);
 		contentPane.add(btnfakt);
 		
 		
