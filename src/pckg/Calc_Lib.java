@@ -18,7 +18,7 @@ public class Calc_Lib {
 	 * @return Vysledek po secteni vstupnich parametru.
 	 * @throws Exception (Add overflow)
 	 */
-	public double add(double x, double y) throws Exception {
+	public static double add(double x, double y) throws Exception {
 		double result = x + y;
 		if (result == Double.POSITIVE_INFINITY || result == Double.NEGATIVE_INFINITY) {
 			throw new Exception("Add overflow");
@@ -34,7 +34,7 @@ public class Calc_Lib {
 	 * @return Vysledny rozdil dvou vstupnich parametru.
 	 * @throws Exception (Sub overflow)
 	 */
-	public double sub(double x, double y) throws Exception {
+	public static double sub(double x, double y) throws Exception {
 		double result = x - y;
 		if (result == Double.POSITIVE_INFINITY || result == Double.NEGATIVE_INFINITY) {
 			throw new Exception("Sub overflow");
@@ -50,7 +50,7 @@ public class Calc_Lib {
 	 * @return Vysledek po nasobeni dvou vstupnich parametru.
 	 * @throws Exception (Mult overflow)
 	 */
-	public double mult(double x, double y) throws Exception {
+	public static double mult(double x, double y) throws Exception {
 		double result = x * y;
 		if (result == Double.POSITIVE_INFINITY || result == Double.NEGATIVE_INFINITY) {
 			throw new Exception("Mult overflow");
@@ -58,11 +58,11 @@ public class Calc_Lib {
 		return result;
 	}
 
-	public double divide(double x, double y) {
-		return 111.1;
+	public static double divide(double x, double y) {
+		return x/y;
 	}
 
-	public long factorial(long x) {
+	public static long factorial(long x) {
 		return 1;
 	}
 
@@ -130,8 +130,16 @@ public class Calc_Lib {
 		}
 		return result;
 	}
-
-	public static double st_Dev(String filename) throws IOException {
+	
+	/**
+	 * Vypočítá směrodatnou odchylku z hodnot, které se nacházejí v souboru zadaném cestou 'filename'.
+	 * Čísla uvnitř souboru jsou ve fromátu: cislo1 'whitespace chars' cislo2' whitespace chars'... cislo n
+	 * Směrodatnou odchylku počítá podle vzorečku: ((suma(od i=0 do n)(xi - Xprumer)^2)/(n-1))^0.5
+	 * @param filename - Cesta k souboru s čísly
+	 * @return hodnota směrodatné odchylky
+	 * @throws Exception
+	 */
+	public static double st_Dev(String filename) throws Exception {
 		List<Double> doubles = new ArrayList<>();
 		
 		BufferedReader br = new BufferedReader(new FileReader(filename));
@@ -142,7 +150,7 @@ public class Calc_Lib {
 
 		    while (line != null) 
 		    {
-		    	StringArr = line.split(" ");
+		    	StringArr = line.split("\\s+");
 		    	
 		    	for(String item : StringArr)
 		    	{
@@ -154,19 +162,54 @@ public class Calc_Lib {
 		}
 		catch(IOException | NumberFormatException e)
 		{
-			throw e;
+			throw new Exception("Invalid input file");
 		}
 		finally 
 		{
 		    br.close();
 		}
 		
+		//pocitani prumeru
+		double average = 0.0;
+		
 		for(Double item : doubles)
 		{
-			System.out.print(item + "\n");
+			try
+			{
+				average = add(average, item);
+			}
+			catch(Exception e)
+			{
+				throw e;
+			}
 		}
 		
-		return 2.555;
+		try
+		{
+			average = divide(average, doubles.size());
+		}
+		catch(Exception e)
+		{
+			throw e;
+		}
+		
+		double sum = 0.0;
+		
+		//pocitani suma(0-n)(xi - Xprumer)^2
+		for(Double item : doubles)
+		{
+			try
+			{
+				sum = add(sum,power(sub(item, average),2));
+			}
+			catch(Exception e)
+			{
+				throw e;
+			}
+		}
+		
+		//vysledek (suma/n-1)^0.5
+		return root(divide(sum, doubles.size()-1),2);
 	}
 
 }
