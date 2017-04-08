@@ -133,14 +133,29 @@ public class CalcActionListener extends AbstractAction{
     private String druhec ="";
     private String operace="";
     private String vys="";
-    private Integer jednou=0;
+    private Integer zadavamdo=0;
+    private Integer chyba=0;
     /* 
     
+     private Integer jednou=0;
+     
     private Integer konec1=-1;
     private Integer od=0;
     */
     private void rovnasePressed()
     {
+    	Components.priklad.setText(Components.priklad.getText()+Components.vysledek.getText());
+    	if (operace==""){
+    		Components.priklad.setText(Components.vysledek.getText());
+    	}
+    	else{
+    	Components.vysledek.setText(vypocitej(prvnic,druhec,operace));
+    	operace="";
+    	prvnic="";
+    	druhec="";
+    	zadavamdo=3;
+    	}
+    	/* jednoduchy parser
     	priklad = Components.priklad.getText().toString();
     	jednou=0;
     	for(int i = 0; i < priklad.length(); i++)
@@ -242,9 +257,9 @@ public class CalcActionListener extends AbstractAction{
     	
     	
     	
+    	*/
     	
-    	
-    	/*
+    	/* slozity parser
     	priklad = Components.priklad.getText().toString();
     	if (odmocnina > 0){
     		for(int i = 0; i < priklad.length(); i++)
@@ -310,84 +325,267 @@ public class CalcActionListener extends AbstractAction{
     		
     		System.out.print(prvni+"to bzlo prvni nasleduje druhe :");
     		System.out.print(druhe + "konec");
-    		castvys = calclib.add(Integer.valueOf(prvni), Integer.valueOf(druhe));
+    		castvys = calclib.add(Double.valueOf(prvni), Double.valueOf(druhe));
     	}
     	else if(operace == "-"){
-    		castvys = calclib.sub(Integer.valueOf(prvni), Integer.valueOf(druhe));
+    		System.out.print(prvni+"to bzlo prvni nasleduje druhe :");
+    		System.out.print(druhe + "konec");
+    		castvys = calclib.sub(Double.valueOf(prvni), Double.valueOf(druhe));
     	}
     	else if(operace == "*"){
-    		castvys = calclib.mult(Integer.valueOf(prvni), Integer.valueOf(druhe));
+    		castvys = calclib.mult(Double.valueOf(prvni), Double.valueOf(druhe));
     	}
     	else if(operace == "/"){
-    		castvys = calclib.divide(Integer.valueOf(prvni), Integer.valueOf(druhe));
+    		castvys = calclib.divide(Double.valueOf(prvni), Double.valueOf(druhe));
     	}
     	else if(operace == "^"){
-    		castvys = calclib.power(Integer.valueOf(prvni), Integer.valueOf(druhe));
+    		castvys = calclib.power(Double.valueOf(prvni), Double.valueOf(druhe));
     	}
     	else if(operace == "√"){
     		System.out.print(prvni+"to bzlo prvni nasleduje druhe :");
     		System.out.print(druhe + "konec");
-    		castvys = calclib.root(Integer.valueOf(druhe), Integer.valueOf(prvni));
+    		castvys = calclib.root( Double.valueOf(prvni),Double.valueOf(druhe));
     	}
     	return Double.toString(castvys) ;
     }
     private void plusPressed()
     {
-    	Components.priklad.setText(Components.priklad.getText() + "+");
+    	if (zadavamdo==1 )
+    	{	
+    		druhec=Components.vysledek.getText().toString();
+    		prvnic=vypocitej(prvnic,druhec,operace); 
+    		Components.priklad.setText(prvnic+"+");
+    		operace="+";
+    		Components.vysledek.setText("");
+    	}
+    	else if (zadavamdo == 0 || zadavamdo==3){
+    		prvnic=Components.vysledek.getText().toString();
+    		Components.priklad.setText(Components.vysledek.getText()+"+");
+    		Components.vysledek.setText("");
+    		zadavamdo=1;
+    		operace="+";
+    	}
+    	else{
+    		//chyba=1; rovna se
+    		
+    	}
     }
     
     private void btn0Pressed()
     {
-    	Components.priklad.setText(Components.priklad.getText() + "0");
+    	if (zadavamdo==0){
+    		Components.vysledek.setText(Components.vysledek.getText() + "0");
+    		prvnic=prvnic+"0";
+    	}
+    	else if (zadavamdo==1){
+    		Components.vysledek.setText(Components.vysledek.getText() + "0");
+    		druhec=druhec+"0";
+    	}
+    	else {
+    		Components.vysledek.setText("");
+    		zadavamdo=0;
+    		Components.vysledek.setText(Components.vysledek.getText() + "0");
+    		prvnic=prvnic+"0";
+    	}
     }
     
     private void btn1Pressed()
     {
-    	Components.priklad.setText(Components.priklad.getText() + "1");
+    	if (zadavamdo==0){
+    		Components.vysledek.setText(Components.vysledek.getText() + "1");
+    		prvnic=prvnic+"1";
+    	}
+    	else if (zadavamdo==1){
+    		Components.vysledek.setText(Components.vysledek.getText() + "1");
+    		druhec=druhec+"1";
+    	}
+    	else {
+    		Components.vysledek.setText("");
+    		zadavamdo=0;
+    		Components.vysledek.setText(Components.vysledek.getText() + "1");
+    		prvnic=prvnic+"1";
+    	}
     }
     
     private void btn2Pressed()
     {
-    	Components.priklad.setText(Components.priklad.getText() + "2");
+    	if (zadavamdo==0){
+    		Components.vysledek.setText(Components.vysledek.getText() + "2");
+    		prvnic=prvnic+"2";
+    	}
+    	else if (zadavamdo==1){
+    		Components.vysledek.setText(Components.vysledek.getText() + "2");
+    		druhec=druhec+"2";
+    	}
+    	else {
+    		Components.vysledek.setText("");
+    		zadavamdo=0;
+    		Components.vysledek.setText(Components.vysledek.getText() + "2");
+    		prvnic=prvnic+"2";
+    	}
     }
+    
     
     private void btn3Pressed()
     {
-    	Components.priklad.setText(Components.priklad.getText() + "3");
+    	if (zadavamdo==0){
+    		Components.vysledek.setText(Components.vysledek.getText() + "3");
+    		prvnic=prvnic+"3";
+    	}
+    	else if (zadavamdo==1){
+    		Components.vysledek.setText(Components.vysledek.getText() + "3");
+    		druhec=druhec+"3";
+    	}
+    	else {
+    		Components.vysledek.setText("");
+    		zadavamdo=0;
+    		Components.vysledek.setText(Components.vysledek.getText() + "3");
+    		prvnic=prvnic+"3";
+    	}
     }
     
     private void btn4Pressed()
     {
-    	Components.priklad.setText(Components.priklad.getText() + "4");
+    	if (zadavamdo==0){
+    		Components.vysledek.setText(Components.vysledek.getText() + "4");
+    		prvnic=prvnic+"4";
+    	}
+    	else if (zadavamdo==1){
+    		Components.vysledek.setText(Components.vysledek.getText() + "4");
+    		druhec=druhec+"4";
+    	}
+    	else {
+    		Components.vysledek.setText("");
+    		zadavamdo=0;
+    		Components.vysledek.setText(Components.vysledek.getText() + "4");
+    		prvnic=prvnic+"4";
+    	}
     }
     
     private void btn5Pressed()
     {
-    	Components.priklad.setText(Components.priklad.getText() + "5");
+    	if (zadavamdo==0){
+    		Components.vysledek.setText(Components.vysledek.getText() + "5");
+    		prvnic=prvnic+"5";
+    	}
+    	else if (zadavamdo==1){
+    		Components.vysledek.setText(Components.vysledek.getText() + "5");
+    		druhec=druhec+"5";
+    	}
+    	else {
+    		Components.vysledek.setText("");
+    		zadavamdo=0;
+    		Components.vysledek.setText(Components.vysledek.getText() + "5");
+    		prvnic=prvnic+"5";
+    	}
     }
     
     private void btn6Pressed()
     {
-    	Components.priklad.setText(Components.priklad.getText() + "6");
+    	if (zadavamdo==0){
+    		Components.vysledek.setText(Components.vysledek.getText() + "6");
+    		prvnic=prvnic+"6";
+    	}
+    	else if (zadavamdo==1){
+    		Components.vysledek.setText(Components.vysledek.getText() + "6");
+    		druhec=druhec+"6";
+    	}
+    	else {
+    		Components.vysledek.setText("");
+    		zadavamdo=0;
+    		Components.vysledek.setText(Components.vysledek.getText() + "6");
+    		prvnic=prvnic+"6";
+    	}
     }
     
     private void btn7Pressed()
     {
-    	Components.priklad.setText(Components.priklad.getText() + "7");
+    	if (zadavamdo==0){
+    		Components.vysledek.setText(Components.vysledek.getText() + "7");
+    		prvnic=prvnic+"7";
+    	}
+    	else if (zadavamdo==1){
+    		Components.vysledek.setText(Components.vysledek.getText() + "7");
+    		druhec=druhec+"7";
+    	}
+    	else {
+    		Components.vysledek.setText("");
+    		zadavamdo=0;
+    		Components.vysledek.setText(Components.vysledek.getText() + "7");
+    		prvnic=prvnic+"7";
+    	}
     }
     
     private void btn8Pressed()
     {
-    	Components.priklad.setText(Components.priklad.getText() + "8");
+    	if (zadavamdo==0){
+    		Components.vysledek.setText(Components.vysledek.getText() + "8");
+    		prvnic=prvnic+"8";
+    	}
+    	else if (zadavamdo==1){
+    		Components.vysledek.setText(Components.vysledek.getText() + "8");
+    		druhec=druhec+"8";
+    	}
+    	else {
+    		Components.vysledek.setText("");
+    		zadavamdo=0;
+    		Components.vysledek.setText(Components.vysledek.getText() + "8");
+    		prvnic=prvnic+"8";
+    	}
     }
     
     private void btn9Pressed()
     {
-    	Components.priklad.setText(Components.priklad.getText() + "9");
+    	if (zadavamdo==0){
+    		Components.vysledek.setText(Components.vysledek.getText() + "9");
+    		prvnic=prvnic+"9";
+    	}
+    	else if (zadavamdo==1){
+    		Components.vysledek.setText(Components.vysledek.getText() + "9");
+    		druhec=druhec+"9";
+    	}
+    	else {
+    		Components.vysledek.setText("");
+    		zadavamdo=0;
+    		Components.vysledek.setText(Components.vysledek.getText() + "9");
+    		prvnic=prvnic+"9";
+    	}
     }
     private void btnminPressed()
     {
-    	Components.priklad.setText(Components.priklad.getText() + "-");
+    	
+    	if (Components.vysledek.getText().isEmpty() && zadavamdo == 0){
+    		prvnic="-";
+    		Components.vysledek.setText("-");
+    		
+    	}
+    	else if (zadavamdo==1 && druhec=="" )
+    	{	
+    		druhec="-";
+    		Components.vysledek.setText("-");
+    	}
+    	else if (zadavamdo == 0 || zadavamdo==3){
+    		prvnic=Components.vysledek.getText().toString();
+    		Components.priklad.setText(Components.vysledek.getText()+"-");
+    		Components.vysledek.setText("");
+    		zadavamdo=1;
+    		operace="-";
+    	}
+    	else if (zadavamdo == 1)
+    	{
+    		druhec=Components.vysledek.getText().toString();
+    		prvnic=vypocitej(prvnic,druhec,operace); 
+    		Components.priklad.setText(prvnic+"-");
+    		operace="-";
+    		Components.vysledek.setText("");
+    		
+    	}
+    	else{
+    		//chyba=1; rovna se
+    		
+    	}
+    	
+    	
     }
     private void btnkratPressed()
     {
