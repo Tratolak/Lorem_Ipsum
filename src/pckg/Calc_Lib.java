@@ -1,5 +1,8 @@
 package pckg;
 
+import java.io.*;
+import java.util.*;
+
 /**
  * Matematicka knihovna obsahujici funkce pro vypocet: souctu, rozdilu,
  * soucinu, podilu, faktorialu, mocniny, odmocniny a smerodatne odchylky.
@@ -70,7 +73,7 @@ public class Calc_Lib {
 	 * @return powered number
 	 * @throws Exception
 	 */
-	public double power(double x, double n) throws Exception {
+	public static double power(double x, double n) throws Exception {
 		boolean neg_flag = false; //detect if ne is  negative
 		double step = 1; //part of polynomial
 		double prev_result = 1;
@@ -107,7 +110,7 @@ public class Calc_Lib {
 	 * @return result of root
 	 * @throws Exception
 	 */
-	public double root(double x, double n) throws Exception {
+	public static double root(double x, double n) throws Exception {
 		double result = 1;
 		double previous = 2;
 		if (x < 0) {
@@ -128,7 +131,41 @@ public class Calc_Lib {
 		return result;
 	}
 
-	public double st_Dev(String filename) {
+	public static double st_Dev(String filename) throws IOException {
+		List<Double> doubles = new ArrayList<>();
+		
+		BufferedReader br = new BufferedReader(new FileReader(filename));
+		try 
+		{
+		    String line = br.readLine();
+		    String StringArr[];
+
+		    while (line != null) 
+		    {
+		    	StringArr = line.split(" ");
+		    	
+		    	for(String item : StringArr)
+		    	{
+		    		doubles.add(Double.parseDouble(item));
+		    	}
+		        
+		        line = br.readLine();
+		    }
+		}
+		catch(IOException | NumberFormatException e)
+		{
+			throw e;
+		}
+		finally 
+		{
+		    br.close();
+		}
+		
+		for(Double item : doubles)
+		{
+			System.out.print(item + "\n");
+		}
+		
 		return 2.555;
 	}
 
