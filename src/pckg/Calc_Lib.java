@@ -132,9 +132,9 @@ public class Calc_Lib {
 	}
 	
 	/**
-	 * Vypočítá směrodatnou odchylku z hodnot, které se nacházejí v souboru zadaném cestou 'filename'.
-	 * Čísla uvnitř souboru jsou ve fromátu: cislo1 'whitespace chars' cislo2' whitespace chars'... cislo n
-	 * Směrodatnou odchylku počítá podle vzorečku: ((suma(od i=0 do n)(xi - Xprumer)^2)/(n-1))^0.5
+	 * Vypočítá směrodatnou odchylku z hodnot, které se nacházejí v souboru zadaném cestou 'filename'. <br>
+	 * Čísla uvnitř souboru jsou ve fromátu: cislo1 'whitespace chars' cislo2' whitespace chars'... cislo n <br>
+	 * Směrodatnou odchylku počítá podle vzorečku: ((suma(od i=0 do n)(xi - Xprumer)^2)/(n-1))^0.5 <br>
 	 * @param filename - Cesta k souboru s čísly
 	 * @return hodnota směrodatné odchylky
 	 * @throws Exception
