@@ -71,7 +71,8 @@ public class Main_Window extends JFrame{
 		public JButton btndeleno;
 		public JButton btnkrat;
 		public JTextField priklad;
-		public JTextField vysledek;   
+		public JTextField vysledek;  
+		public JFileChooser fc;
 	 }
 
 	private Main_Window.ComponentContainer CompContainer = new Main_Window.ComponentContainer();
@@ -107,7 +108,7 @@ public class Main_Window extends JFrame{
 	
 	private CalcActionListener ActionListener;
 	private final JScrollPane scrollPane = new JScrollPane();
-
+	private final JFileChooser fc = new JFileChooser();
 	/**
 	 * Spuštìní aplikace
 	 */
@@ -159,7 +160,7 @@ public class Main_Window extends JFrame{
 		CompContainer.btnkrat = btnkrat;
 		CompContainer.priklad = priklad;
 		CompContainer.vysledek = vysledek;  
-		
+		CompContainer.fc = fc;
 		ActionListener = new CalcActionListener(CompContainer);
 	
 		
