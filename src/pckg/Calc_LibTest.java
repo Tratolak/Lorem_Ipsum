@@ -99,17 +99,23 @@ public class Calc_LibTest {
 		}
 
 		double result = calc.divide(105.4,6);
-		Assert.assertEquals(17.5668, result,0.0001);
 		Assert.assertEquals(17.5666, result,0.0001);
     }
 
     @Test
     public void factorial() throws Exception {
 		try{
-			calc.factorial(1000);
+			calc.factorial(100);
 			fail();
 		} catch (Exception e){
 			final String expected = "Factorial overflow";
+			assertEquals(expected, e.getMessage());
+		}
+		try{
+			calc.factorial(-4);
+			fail();
+		} catch (Exception e){
+			final String expected = "Factorial from negative number";
 			assertEquals(expected, e.getMessage());
 		}
 
@@ -167,11 +173,11 @@ public class Calc_LibTest {
     @Test
     public void st_Dev() throws Exception {
 		double result;
-		result = calc.st_Dev("st_Dev_00.txt");
-		Assert.assertEquals(45.05729, result,0.00001);
+		result = calc.st_Dev("src/pckg/st_Dev_00.txt");
+		Assert.assertEquals(46.58169, result,0.00001);
 
 		try{
-			calc.st_Dev("st_Dev_01.txt");
+			calc.st_Dev("src/pckg/st_Dev_01.txt");
 			fail();
 		} catch (Exception e){
 			final String expected = "Invalid input file";
