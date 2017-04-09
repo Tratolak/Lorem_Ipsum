@@ -132,26 +132,11 @@ public class CalcActionListener extends AbstractAction{
     		System.out.print("toto se nemelo stat");
     	}
     }
-    /*
-    private Integer mocnina = 0;
-    private Integer odmocnina = 0;
-    private Integer nasobeni = 0;
-    private Integer deleni = 0;
-    */
-    private String priklad="";
     private String prvnic ="";
     private String druhec ="";
     private String operace="";
-    private String vys="";
     private Integer zadavamdo=0;
-    private Integer chyba=0;
-    /* 
-    
-     private Integer jednou=0;
-     
-    private Integer konec1=-1;
-    private Integer od=0;
-    */
+  
     private void rovnasePressed()
     {
     	if (druhec.isEmpty()){
@@ -238,14 +223,14 @@ public class CalcActionListener extends AbstractAction{
     		poccarek=0;return "Neplatne cislo";
     		}else{poccarek=0;}	
     		
-    	if (prvni.isEmpty()){prvni="0";}
-    	if (druhe.isEmpty()){if (operace=="/"){
+    	if (prvni.isEmpty() || prvni.equals("-")){prvni="0";}
+    	if (druhe.isEmpty() || druhe.equals("-")){
+    		if (operace=="/"){
     		druhe="1";return "Neplatne cislo";
     		}
     	else{druhe="0";}}
-    	System.out.print("op"+operace+"po");
+    	
     	if (operace == "+"){
-    		
     		System.out.print(prvni+"to bzlo prvni nasleduje druhe :");
     		System.out.print(druhe + "konec");
     		castvys = calclib.add(Double.valueOf(prvni), Double.valueOf(druhe));
@@ -253,6 +238,8 @@ public class CalcActionListener extends AbstractAction{
     	else if(operace == "-"){
     		System.out.print(prvni+"to bzlo prvni nasleduje druhe :");
     		System.out.print(druhe + "konec");
+    		
+    		System.out.print(Double.valueOf(prvni));
     		castvys = calclib.sub(Double.valueOf(prvni), Double.valueOf(druhe));
     	}
     	else if(operace == "*"){
@@ -262,8 +249,6 @@ public class CalcActionListener extends AbstractAction{
     		castvys = calclib.divide(Double.valueOf(prvni), Double.valueOf(druhe));
     	}
     	else if(operace == "^"){
-    		System.out.print(prvni+"to bzlo prvni nasleduje druhe :");
-    		System.out.print(druhe + "konec");
     		castvys = calclib.power(Double.valueOf(prvni), Double.valueOf(druhe));
     	}
     	else if(operace == "√"){
@@ -296,8 +281,8 @@ public class CalcActionListener extends AbstractAction{
     	else if (zadavamdo == 1 && operace!="")
     	{
     		druhec=Components.vysledek.getText().toString();
-    		
-    		if (Components.vysledek.getText().isEmpty()){
+    		System.out.print(druhec);
+    		if (Components.vysledek.getText().isEmpty() || druhec.equals("-")){
         		druhec="0";
     		}
     		prvnic=vypocitej(prvnic,druhec,operace); 
@@ -431,7 +416,7 @@ public class CalcActionListener extends AbstractAction{
     	
     }
     
-  
+    
     private void btncarPressed()
     {
     	vypis(".");
@@ -619,6 +604,7 @@ public class CalcActionListener extends AbstractAction{
     		
     	}
     	else{
+    		System.out.print(cesta);;
     		Components.vysledek.setText(Double.toString(calclib.st_Dev(cesta)));
     	}
     }
