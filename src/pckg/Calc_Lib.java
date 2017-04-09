@@ -60,37 +60,38 @@ public class Calc_Lib {
 
 	/**
 	 * Provadi vypoce podilu dvou cisel. Pokud je delitel 0 vyvola vyjimku
+	 *
 	 * @param x - delenec
 	 * @param y - delitel
 	 * @return vysledek po nasobeni
-	 * @throws Exception
+	 * @throws Exception (Dividing by zero)
 	 */
-	public static double divide(double x, double y) throws Exception{
-		if(y == 0){
+	public static double divide(double x, double y) throws Exception {
+		if (y == 0) {
 			throw new Exception("Dividing by zero");
 		}
-		return x/y;
+		return x / y;
 	}
 
 	/**
 	 * Provadi vypocet faktorialu. Pokud je cislo 'x' zaporne nebo dojde k preteceni vyvola vyjimku.
+	 *
 	 * @param x - cislo pro vypocet faktorialu
 	 * @return hdnotu faktorialu
-	 * @throws Exception
+	 * @throws Exception (Factorial from negative number) || (Factorial overflow)
 	 */
-	public static long factorial(long x) throws Exception{
-		if(x < 0){
-			throw  new Exception("Factorial from negative number");
+	public static long factorial(long x) throws Exception {
+		if (x < 0) {
+			throw new Exception("Factorial from negative number");
 		}
 		long result = 1;
-		do{
-			if(result >= Long.MAX_VALUE / x)
-			{
+		do {
+			if (result >= Long.MAX_VALUE / x) {
 				throw new Exception("Factorial overflow");
 			}
 			result = result * x;
-			x-- ;
-		}while(x > 0);
+			x--;
+		} while (x > 0);
 		return result;
 	}
 
@@ -103,7 +104,7 @@ public class Calc_Lib {
 	 * @param x - zaklad
 	 * @param n - exponent
 	 * @return umocnene cislo
-	 * @throws Exception
+	 * @throws Exception (Power overflow)
 	 */
 	public static double power(double x, double n) throws Exception {
 		boolean neg_flag = false; //
@@ -140,7 +141,7 @@ public class Calc_Lib {
 	 * @param x - zaklad
 	 * @param n - stupen odmocniny
 	 * @return vysledek po odmocnovani
-	 * @throws Exception
+	 * @throws Exception (Root from negative number) || (Can't count zero root)
 	 */
 	public static double root(double x, double n) throws Exception {
 		double result = 1;
