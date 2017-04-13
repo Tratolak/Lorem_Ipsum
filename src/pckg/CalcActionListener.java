@@ -24,11 +24,13 @@ public class CalcActionListener extends AbstractAction{
 	 private Integer zadavamdo=0; //uzivatel prave zapisuje bud prvni nebo druhe cislo 
 	 private String posledniplatny=""; //posledni platny vysledek
 	 private Long factorial; //vypocteny factorial
+	 private double castvys=0;
+	 private Integer poccarek=0;
      Main_Window.ComponentContainer Components;
 
     /**
-     * Konstruktor
-     * 
+     * Konstruktor  
+     *@param Main_Window.ComponentContainer předán container s graf. prvky
      */
     public CalcActionListener( Main_Window.ComponentContainer container){
     	Components = container;
@@ -36,6 +38,8 @@ public class CalcActionListener extends AbstractAction{
     
     /**
      * Odchytávač signálů
+     * volá příslušné funkce tlačítek
+     * @param ActionEvent předán ActionEvent
      */
     public void actionPerformed(ActionEvent e) {
     	
@@ -45,63 +49,63 @@ public class CalcActionListener extends AbstractAction{
     	}
     	else if(e.getSource().equals(Components.btnplus))
     	{
-    		plusPressed();
+    		unoperace("+");
     	}
     	else if(e.getSource().equals(Components.btn0))
     	{
-    		btn0Pressed();
+    		vypis("0");
     	}
     	else if(e.getSource().equals(Components.btn1))
     	{
-    		btn1Pressed();
+    		vypis("1");
     	}
     	else if(e.getSource().equals(Components.btn2))
     	{
-    		btn2Pressed();
+    		vypis("2");
     	}
     	else if(e.getSource().equals(Components.btn3))
     	{
-    		btn3Pressed();
+    		vypis("3");
     	}
     	else if(e.getSource().equals(Components.btn4))
     	{
-    		btn4Pressed();
+    		vypis("4");
     	}
     	else if(e.getSource().equals(Components.btn5))
     	{
-    		btn5Pressed();
+    		vypis("5");
     	}
     	else if(e.getSource().equals(Components.btn6))
     	{
-    		btn6Pressed();
+    		vypis("6");
     	}
     	else if(e.getSource().equals(Components.btn7))
     	{
-    		btn7Pressed();
+    		vypis("7");
     	}
     	else if(e.getSource().equals(Components.btn8))
     	{
-    		btn8Pressed();
+    		vypis("8");
     	}
     	else if(e.getSource().equals(Components.btn9))
     	{
-    		btn9Pressed();
+    		vypis("9");
     	}
     	else if(e.getSource().equals(Components.btnminus))
     	{
-    		btnminPressed();
+    		unoperace("-");
     	}
     	else if(e.getSource().equals(Components.btnkrat))
     	{
-    		btnkratPressed();
+    		unoperace("*");
     	}
     	else if(e.getSource().equals(Components.btndeleno))
     	{
-    		btndelenoPressed();
+    		unoperace("/");
     	}
     	else if(e.getSource().equals(Components.btncar))
     	{
-    		btncarPressed();
+    		vypis(".");
     	}
     	else if(e.getSource().equals(Components.btnC))
     	{
@@ -148,84 +152,6 @@ public class CalcActionListener extends AbstractAction{
     		System.out.print("toto se nemelo stat");
     	}
     }
-    /**
-     * zavola univerzalni operaci pro nastaveni operace -
-     */
-    private void btnminPressed()
-    {
-    	unoperace("-");
-    }
-    
-    private void plusPressed()
-    {
-    	unoperace("+");
-    }
-    
-    private void btnkratPressed()
-    {
-    	unoperace("*");
-    }
-    
-    private void btndelenoPressed()
-    {
-    	unoperace("/"); 	
-    }
-    
-    private void btn0Pressed()
-    {
-    	vypis("0");
-    }
-    
-    private void btn1Pressed()
-    {
-    	vypis("1");
-    }
-    
-    private void btn2Pressed()
-    {
-    	vypis("2");
-    }
-    
-    
-    private void btn3Pressed()
-    {
-    	vypis("3");
-    }
-    
-    private void btn4Pressed()
-    {
-    	vypis("4");
-    }
-    
-    private void btn5Pressed()
-    {
-    	vypis("5");
-    }
-    
-    private void btn6Pressed()
-    {
-    	vypis("6");
-    }
-    
-    private void btn7Pressed()
-    {
-    	vypis("7");
-    }
-    
-    private void btn8Pressed()
-    {
-    	vypis("8");
-    }
-    
-    private void btn9Pressed()
-    {
-    	vypis("9");
-    }
-    
-    private void btncarPressed()
-    {
-    	vypis(".");
-    }
     
     private void rovnasePressed()
     {
@@ -253,7 +179,26 @@ public class CalcActionListener extends AbstractAction{
     	posledniplatny=vypocitej(prvnic,druhec,operace);
     	}
     	catch (Exception e){
-    		
+    		if (e.getMessage().equals("MathError")){
+				Components.priklad.setText("MathError");
+				Components.vysledek.setText("");
+				prvnic="";
+		    	druhec="";
+		    	operace="";
+		    	zadavamdo=0;
+		    	return;
+				
+			}
+			else {
+				Components.priklad.setText("MathError");
+				Components.vysledek.setText("");
+				prvnic="";
+		    	druhec="";
+		    	operace="";
+		    	zadavamdo=0;
+		    	return;
+				
+			}
     		
     	}
     	
@@ -297,8 +242,7 @@ public class CalcActionListener extends AbstractAction{
     }
     
     
-    private double castvys=0;
-    private Integer poccarek=0;
+    
  //   private Calc_Lib calclib = new Calc_Lib();
     /**
      * funkce pro volani příslušných mat. funkcí
@@ -306,8 +250,9 @@ public class CalcActionListener extends AbstractAction{
      * @param druhe druhy argument pro vypocet
      * @param operace operace ktera se ma provest 
      * @return vypocitane cislo formou stringu
+     * @throws Exception cislo ma vice desetinych carek 
      */
-    private String vypocitej(String prvni, String druhe, String operace)
+    private String vypocitej(String prvni, String druhe, String operace) throws Exception
     {
     	System.out.print("op:"+operace);
     	for(int i = 0; i < prvni.length(); i++)
@@ -316,53 +261,36 @@ public class CalcActionListener extends AbstractAction{
     	}
     	if (poccarek>1){
     		poccarek=0;
-    		
-    		Components.vysledek.setText("Neplatné číslo");
-    		
-    		try {
-				TimeUnit.SECONDS.sleep(1);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-    		btnCPressed();
-    		return "";
+    		throw new Exception("Neplatnecislo");
     		}
-    	else{poccarek=0;}
+    	else
+    	{
+    		poccarek=0;
+    	}
     	for(int i = 0; i < druhe.length(); i++)
     	{
     		if (druhe.charAt(i)=='.'){poccarek+=1;}
     	}
-    	if (poccarek>1){
+    	if (poccarek>1)
+    	{
+    		poccarek=0;	
+    		throw new Exception("Neplatnecislo");
+    	}
+    	else
+    	{
     		poccarek=0;
-    		
-    		Components.vysledek.setText("Nemplatné číslo");
-    		try {
-				TimeUnit.SECONDS.sleep(1);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-    		btnCPressed();
-    		return "";
-    		}else{poccarek=0;}	
-    		
-    	if (prvni.isEmpty() || prvni.equals("-")){prvni="0";}
-    	if (druhe.isEmpty() || druhe.equals("-")){
-    		if (operace=="/"){
-    		druhe="1";return "Neplatne cislo";
-    		}
-    	else{druhe="0";}}
+    	}	
     	
     	if (operace == "+"){
-    		System.out.print(prvni+"to bzlo prvni nasleduje druhe :");
-    		System.out.print(druhe + "konec");
+    		//System.out.print(prvni+"to bzlo prvni nasleduje druhe :");
+    		//System.out.print(druhe + "konec");
     		try
     		{
     			castvys = Calc_Lib.add(Double.valueOf(prvni), Double.valueOf(druhe));
     		}
     		catch (Exception e)
     		{
-    			Components.vysledek.setText("MathError");
-    			
+    			throw new Exception("MathError");
     		}
     		
     			
@@ -380,10 +308,9 @@ public class CalcActionListener extends AbstractAction{
     		}
     		catch (Exception e)
     		{
-    			Components.vysledek.setText("MathError");		
+    			throw new Exception("MathError");		
     			
     		}
-    		//castvys = calclib.sub(Double.valueOf(prvni), Double.valueOf(druhe));
     	}
     	else if(operace == "*"){
     		try
@@ -392,20 +319,21 @@ public class CalcActionListener extends AbstractAction{
     		}
     		catch (Exception e)
     		{
-    			Components.vysledek.setText("MathError");
-    			
+    			throw new Exception("MathError");
     		}
     		
     	}
     	else if(operace == "/"){
+    		System.out.print("cislo1:"+prvni+" nasleduje druhe :");
+    		System.out.print(druhe + "konec");
     		try
     		{
     			castvys = Calc_Lib.divide(Double.valueOf(prvni), Double.valueOf(druhe));
     		}
     		catch (Exception e)
     		{
-    			Components.vysledek.setText("MathError");
-    			
+    			System.out.print("zachcenzmatiky");
+    			throw new Exception("MathError");   			
     		}
     		
     	}
@@ -416,8 +344,7 @@ public class CalcActionListener extends AbstractAction{
     		}
     		catch (Exception e)
     		{
-    			Components.vysledek.setText("MathError");
-    			
+    			throw new Exception("MathError");
     		}
     		
     	}
@@ -430,8 +357,7 @@ public class CalcActionListener extends AbstractAction{
     		}
     		catch (Exception e)
     		{
-    			Components.vysledek.setText("MathError");	
-	
+    			throw new Exception("MathError");	
     		}
     		
     	}
@@ -449,8 +375,7 @@ public class CalcActionListener extends AbstractAction{
     		}
     		catch (Exception e)
     		{
-    			Components.vysledek.setText("MathError");	
-    			System.out.println("Tadyproblem");
+    			throw new Exception("MathError");
     		}
     		
     	}
@@ -460,7 +385,7 @@ public class CalcActionListener extends AbstractAction{
     
          
     /**
-     * Univerzalni operace zpracovani +,*,/,-
+     * Univerzalni operace zpracovani binarnich operaci
      * @param op druh operace
      */
     private void unoperace(String op){
@@ -482,10 +407,16 @@ public class CalcActionListener extends AbstractAction{
     		zadavamdo=1;
     		operace=op;
     	}
-    	else //jizzadavam druhe cislo
+    	else //jiz zadavam druhe cislo
     	{
     		if(druhec.isEmpty()){//menim operaci
-    			Components.priklad.setText(Components.priklad.getText().substring(0, Components.priklad.getText().length()-3));
+    			if (operace.equals("yroot")){
+    				Components.priklad.setText(Components.priklad.getText().substring(0, Components.priklad.getText().length()-7));
+    			}
+    			else
+    			{
+    				Components.priklad.setText(Components.priklad.getText().substring(0, Components.priklad.getText().length()-3));
+    			}
     			Components.priklad.setText(Components.priklad.getText() + " "+op+" ");
     			operace=op;
     		}
@@ -495,7 +426,26 @@ public class CalcActionListener extends AbstractAction{
     			prvnic=vypocitej(prvnic,druhec,operace); 
     		}
     		catch (Exception e) {
-    			Components.vysledek.setText("Neplatné číslo");	
+    			if (e.getMessage().equals("MathError")){
+    				Components.priklad.setText("MathError");
+    				Components.vysledek.setText("");
+    				prvnic="";
+    		    	druhec="";
+    		    	operace="";
+    		    	zadavamdo=0;
+    		    	return;
+    				
+    			}
+    			else {
+    				Components.priklad.setText("MathError");
+    				Components.vysledek.setText("");
+    				prvnic="";
+    		    	druhec="";
+    		    	operace="";
+    		    	zadavamdo=0;
+    		    	return;
+    				
+    			}
     		}
     		Components.priklad.setText(Components.priklad.getText() + druhec +" "+op+" ");
     		operace=op;
@@ -520,6 +470,26 @@ public class CalcActionListener extends AbstractAction{
     	Components.vysledek.setText(vypocitej(prvnic,druhec,"^")); 
     	}
     	catch(Exception e){
+    		if (e.getMessage().equals("MathError")){
+				Components.priklad.setText("MathError");
+				Components.vysledek.setText("");
+				prvnic="";
+		    	druhec="";
+		    	operace="";
+		    	zadavamdo=0;
+		    	return;
+				
+			}
+			else {
+				Components.priklad.setText("MathError");
+				Components.vysledek.setText("");
+				prvnic="";
+		    	druhec="";
+		    	operace="";
+		    	zadavamdo=0;
+		    	return;
+				
+			}
     		
     	}
     	operace="";
@@ -543,6 +513,26 @@ public class CalcActionListener extends AbstractAction{
     	Components.vysledek.setText(vypocitej(prvnic,druhec,"yroot")); 
     	}
     	catch(Exception e){
+    		if (e.getMessage().equals("MathError")){
+				Components.priklad.setText("MathError");
+				Components.vysledek.setText("");
+				prvnic="";
+		    	druhec="";
+		    	operace="";
+		    	zadavamdo=0;
+		    	return;
+				
+			}
+			else {
+				Components.priklad.setText("MathError");
+				Components.vysledek.setText("");
+				prvnic="";
+		    	druhec="";
+		    	operace="";
+		    	zadavamdo=0;
+		    	return;
+				
+			}
     		
     	}
     }
@@ -616,7 +606,26 @@ public class CalcActionListener extends AbstractAction{
     		}
     		catch (Exception e)
     		{
-    			Components.vysledek.setText("MathError");	
+    			if (e.getMessage().equals("MathError")){
+    				Components.priklad.setText("MathError");
+    				Components.vysledek.setText("");
+    				prvnic="";
+    		    	druhec="";
+    		    	operace="";
+    		    	zadavamdo=0;
+    		    	return;
+    				
+    			}
+    			else {
+    				Components.priklad.setText("MathError");
+    				Components.vysledek.setText("");
+    				prvnic="";
+    		    	druhec="";
+    		    	operace="";
+    		    	zadavamdo=0;
+    		    	return;
+    				
+    			}	
 	
     		}
     	}
@@ -668,6 +677,26 @@ public class CalcActionListener extends AbstractAction{
     	Components.vysledek.setText(vypocitej(prvnic,druhec,"!")); 
     	}
     	catch(Exception e){
+    		if (e.getMessage().equals("MathError")){
+				Components.priklad.setText("MathError");
+				Components.vysledek.setText("");
+				prvnic="";
+		    	druhec="";
+		    	operace="";
+		    	zadavamdo=0;
+		    	return;
+				
+			}
+			else {
+				Components.priklad.setText("MathError");
+				Components.vysledek.setText("");
+				prvnic="";
+		    	druhec="";
+		    	operace="";
+		    	zadavamdo=0;
+		    	return;
+				
+			}
     		
     	}
     	operace="";
