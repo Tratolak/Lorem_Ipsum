@@ -1,7 +1,7 @@
 package pckg;
 
 import java.awt.event.ActionEvent;
-import java.util.concurrent.TimeUnit;
+
 
 import javax.swing.*;
 
@@ -24,8 +24,9 @@ public class CalcActionListener extends AbstractAction{
 	 private Integer zadavamdo=0; //uzivatel prave zapisuje bud prvni nebo druhe cislo 
 	 private String posledniplatny=""; //posledni platny vysledek
 	 private Long factorial; //vypocteny factorial
-	 private double castvys=0;
-	 private Integer poccarek=0;
+	 private double castvys=0;//castecnz vzsledek funkce vypocitej- take posledni platna hodnota 
+	 private Integer poccarek=0;//pocet carek v cisle pri parsovani
+	 private String cesta="";//pro funkci odchylky
      Main_Window.ComponentContainer Components;
 
     /**
@@ -149,7 +150,7 @@ public class CalcActionListener extends AbstractAction{
     	}
     	
     	else{
-    		System.out.print("toto se nemelo stat");
+    		System.out.print("toto se nemelo stat"); //nenastane kazde tlacitko je osetreno
     	}
     }
     
@@ -379,6 +380,10 @@ public class CalcActionListener extends AbstractAction{
     		}
     		
     	}
+    	
+    	castvys= Math.round(castvys*100000); //zaokrouhleni na 5 desetinych mist
+    	castvys=castvys/100000;
+    	
     	return Double.toString(castvys) ;
     }
     
@@ -587,7 +592,7 @@ public class CalcActionListener extends AbstractAction{
     	Components.vysledek.setText("");
     	vypis(Double.toString(castvys));
     }
-    private String cesta="";
+    
     private void btnodch(){
     	btnCPressed();
         int returnVal = Components.fc.showOpenDialog(null);
@@ -667,6 +672,10 @@ public class CalcActionListener extends AbstractAction{
     	}
     	
     }
+    /**
+     * Funkce pro zpracovani argumentu pro faktorial
+     * volá funkci vypocitej s operaci !
+     */
     private void btnfakt(){
     	
     	rovnasePressed();
