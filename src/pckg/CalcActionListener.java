@@ -1,6 +1,8 @@
 package pckg;
 
 import java.awt.event.ActionEvent;
+
+
 import javax.swing.*;
 
 
@@ -16,10 +18,20 @@ public class CalcActionListener extends AbstractAction{
 
 	private static final long serialVersionUID = 1L;
 	
-	Main_Window.ComponentContainer Components;
+	 private String prvnic =""; //prvni zadavane cislo
+	 private String druhec =""; //druhe zadavane cislo
+	 private String operace=""; //zvolena operace
+	 private Integer zadavamdo=0; //uzivatel prave zapisuje bud prvni nebo druhe cislo 
+	 private String posledniplatny=""; //posledni platny vysledek
+	 private Long factorial; //vypocteny factorial
+	 private double castvys=0;//castecnz vzsledek funkce vypocitej- take posledni platna hodnota 
+	 private Integer poccarek=0;//pocet carek v cisle pri parsovani
+	 private String cesta="";//pro funkci odchylky
+     Main_Window.ComponentContainer Components;
 
     /**
-     * Konstruktor
+     * Konstruktor  
+     *@param Main_Window.ComponentContainer předán container s graf. prvky
      */
     public CalcActionListener( Main_Window.ComponentContainer container){
     	Components = container;
@@ -27,10 +39,10 @@ public class CalcActionListener extends AbstractAction{
     
     /**
      * Odchytávač signálů
+     * volá příslušné funkce tlačítek
+     * @param ActionEvent předán ActionEvent
      */
     public void actionPerformed(ActionEvent e) {
-    	
-    	//System.out.print(e.getSource().equals(b2));
     	
     	if(e.getSource().equals(Components.btnrov))
     	{
@@ -38,63 +50,63 @@ public class CalcActionListener extends AbstractAction{
     	}
     	else if(e.getSource().equals(Components.btnplus))
     	{
-    		plusPressed();
+    		unoperace("+");
     	}
     	else if(e.getSource().equals(Components.btn0))
     	{
-    		btn0Pressed();
+    		vypis("0");
     	}
     	else if(e.getSource().equals(Components.btn1))
     	{
-    		btn1Pressed();
+    		vypis("1");
     	}
     	else if(e.getSource().equals(Components.btn2))
     	{
-    		btn2Pressed();
+    		vypis("2");
     	}
     	else if(e.getSource().equals(Components.btn3))
     	{
-    		btn3Pressed();
+    		vypis("3");
     	}
     	else if(e.getSource().equals(Components.btn4))
     	{
-    		btn4Pressed();
+    		vypis("4");
     	}
     	else if(e.getSource().equals(Components.btn5))
     	{
-    		btn5Pressed();
+    		vypis("5");
     	}
     	else if(e.getSource().equals(Components.btn6))
     	{
-    		btn6Pressed();
+    		vypis("6");
     	}
     	else if(e.getSource().equals(Components.btn7))
     	{
-    		btn7Pressed();
+    		vypis("7");
     	}
     	else if(e.getSource().equals(Components.btn8))
     	{
-    		btn8Pressed();
+    		vypis("8");
     	}
     	else if(e.getSource().equals(Components.btn9))
     	{
-    		btn9Pressed();
+    		vypis("9");
     	}
     	else if(e.getSource().equals(Components.btnminus))
     	{
-    		btnminPressed();
+    		unoperace("-");
     	}
     	else if(e.getSource().equals(Components.btnkrat))
     	{
-    		btnkratPressed();
+    		unoperace("*");
     	}
     	else if(e.getSource().equals(Components.btndeleno))
     	{
-    		btndelenoPressed();
+    		unoperace("/");
     	}
     	else if(e.getSource().equals(Components.btncar))
     	{
-    		btncarPressed();
+    		vypis(".");
     	}
     	else if(e.getSource().equals(Components.btnC))
     	{
@@ -128,17 +140,23 @@ public class CalcActionListener extends AbstractAction{
     	{
     		btnodch();
     	}
+    	else if(e.getSource().equals(Components.btnplmi))
+    	{
+    		btnplmi();
+    	}
+    	else if(e.getSource().equals(Components.btnfakt))
+    	{
+    		btnfakt();
+    	}
+    	
     	else{
-    		System.out.print("toto se nemelo stat");
+    		System.out.print("toto se nemelo stat"); //nenastane kazde tlacitko je osetreno
     	}
     }
-    private String prvnic ="";
-    private String druhec ="";
-    private String operace="";
-    private Integer zadavamdo=0;
-  
+    
     private void rovnasePressed()
     {
+    	if (operace.equals("!")){operace="";}
     	if (druhec.isEmpty()){
     		if (Components.vysledek.getText().isEmpty()){
     			Components.priklad.setText(Components.priklad.getText()+ "0" );
@@ -158,14 +176,44 @@ public class CalcActionListener extends AbstractAction{
     		Components.priklad.setText(Components.vysledek.getText());
     	}
     	else{
-    	Components.vysledek.setText(vypocitej(prvnic,druhec,operace));
+    	try{
+    	posledniplatny=vypocitej(prvnic,druhec,operace);
+    	}
+    	catch (Exception e){
+    		if (e.getMessage().equals("MathError")){
+				Components.priklad.setText("MathError");
+				Components.vysledek.setText("");
+				prvnic="";
+		    	druhec="";
+		    	operace="";
+		    	zadavamdo=0;
+		    	return;
+				
+			}
+			else {
+				Components.priklad.setText("MathError");
+				Components.vysledek.setText("");
+				prvnic="";
+		    	druhec="";
+		    	operace="";
+		    	zadavamdo=0;
+		    	return;
+				
+			}
+    		
+    	}
+    	
+    	Components.vysledek.setText(posledniplatny);
+    	//Components.priklad.setText("");
     	operace="";
     	prvnic="";
     	druhec="";
-    	zadavamdo=1;
+    	zadavamdo=0;
+    	
     	}
     	
     }
+    
     /**
      * Funkce pro vypisováni čísel jednak do GUI, ale také do příslušné proměné
      * @param cislo Cislo, které se má vypsat
@@ -195,329 +243,301 @@ public class CalcActionListener extends AbstractAction{
     }
     
     
-    private double castvys=0;
-    private Integer poccarek=0;
-    private Calc_Lib calclib = new Calc_Lib();
+    
+ //   private Calc_Lib calclib = new Calc_Lib();
     /**
      * funkce pro volani příslušných mat. funkcí
      * @param prvni prvni argument pro vypocet
      * @param druhe druhy argument pro vypocet
      * @param operace operace ktera se ma provest 
      * @return vypocitane cislo formou stringu
+     * @throws Exception cislo ma vice desetinych carek 
      */
-    private String vypocitej(String prvni, String druhe, String operace)
+    private String vypocitej(String prvni, String druhe, String operace) throws Exception
     {
+    	System.out.print("op:"+operace);
     	for(int i = 0; i < prvni.length(); i++)
     	{
     		if (prvni.charAt(i)=='.'){poccarek+=1;}
     	}
     	if (poccarek>1){
-    		poccarek=0;return "Neplatne cislo";
+    		poccarek=0;
+    		throw new Exception("Neplatnecislo");
     		}
-    	else{poccarek=0;}
+    	else
+    	{
+    		poccarek=0;
+    	}
     	for(int i = 0; i < druhe.length(); i++)
     	{
     		if (druhe.charAt(i)=='.'){poccarek+=1;}
     	}
-    	if (poccarek>1){
-    		poccarek=0;return "Neplatne cislo";
-    		}else{poccarek=0;}	
-    		
-    	if (prvni.isEmpty() || prvni.equals("-")){prvni="0";}
-    	if (druhe.isEmpty() || druhe.equals("-")){
-    		if (operace=="/"){
-    		druhe="1";return "Neplatne cislo";
-    		}
-    	else{druhe="0";}}
+    	if (poccarek>1)
+    	{
+    		poccarek=0;	
+    		throw new Exception("Neplatnecislo");
+    	}
+    	else
+    	{
+    		poccarek=0;
+    	}	
     	
     	if (operace == "+"){
-    		System.out.print(prvni+"to bzlo prvni nasleduje druhe :");
-    		System.out.print(druhe + "konec");
-    		castvys = calclib.add(Double.valueOf(prvni), Double.valueOf(druhe));
+    		//System.out.print(prvni+"to bzlo prvni nasleduje druhe :");
+    		//System.out.print(druhe + "konec");
+    		try
+    		{
+    			castvys = Calc_Lib.add(Double.valueOf(prvni), Double.valueOf(druhe));
+    		}
+    		catch (Exception e)
+    		{
+    			throw new Exception("MathError");
+    		}
+    		
+    			
+    				
     	}
     	else if(operace == "-"){
     		System.out.print(prvni+"to bzlo prvni nasleduje druhe :");
     		System.out.print(druhe + "konec");
     		
     		System.out.print(Double.valueOf(prvni));
-    		castvys = calclib.sub(Double.valueOf(prvni), Double.valueOf(druhe));
+    		
+    		try
+    		{
+    			castvys = Calc_Lib.sub(Double.valueOf(prvni), Double.valueOf(druhe));
+    		}
+    		catch (Exception e)
+    		{
+    			throw new Exception("MathError");		
+    			
+    		}
     	}
     	else if(operace == "*"){
-    		castvys = calclib.mult(Double.valueOf(prvni), Double.valueOf(druhe));
+    		try
+    		{
+    			castvys = Calc_Lib.mult(Double.valueOf(prvni), Double.valueOf(druhe));
+    		}
+    		catch (Exception e)
+    		{
+    			throw new Exception("MathError");
+    		}
+    		
     	}
     	else if(operace == "/"){
-    		castvys = calclib.divide(Double.valueOf(prvni), Double.valueOf(druhe));
+    		System.out.print("cislo1:"+prvni+" nasleduje druhe :");
+    		System.out.print(druhe + "konec");
+    		try
+    		{
+    			castvys = Calc_Lib.divide(Double.valueOf(prvni), Double.valueOf(druhe));
+    		}
+    		catch (Exception e)
+    		{
+    			System.out.print("zachcenzmatiky");
+    			throw new Exception("MathError");   			
+    		}
+    		
     	}
     	else if(operace == "^"){
-    		castvys = calclib.power(Double.valueOf(prvni), Double.valueOf(druhe));
+    		try
+    		{
+    			castvys = Calc_Lib.power(Double.valueOf(prvni), Double.valueOf(druhe));
+    		}
+    		catch (Exception e)
+    		{
+    			throw new Exception("MathError");
+    		}
+    		
     	}
-    	else if(operace == "√"){
+    	else if(operace == "yroot"){
     		System.out.print(prvni+"to bzlo prvni nasleduje druhe :");
     		System.out.print(druhe + "konec");
-    		castvys = calclib.root( Double.valueOf(prvni),Double.valueOf(druhe));
+    		try
+    		{
+    			castvys = Calc_Lib.root( Double.valueOf(prvni),Double.valueOf(druhe));
+    		}
+    		catch (Exception e)
+    		{
+    			throw new Exception("MathError");	
+    		}
+    		
     	}
+    	
+    	else if(operace.equals("!")){
+    		System.out.print(prvni+"to bzlo prvni nasleduje druhe :");
+    		System.out.print(druhe + "konec");
+    		System.out.print("tujsem");
+    		try
+    		{ 
+    			
+    			factorial = Calc_Lib.factorial(Long.parseLong( String.format( "%.0f",Double.valueOf(prvni))));
+    			System.out.print(factorial +":fact");
+    			castvys= factorial.doubleValue();
+    		}
+    		catch (Exception e)
+    		{
+    			throw new Exception("MathError");
+    		}
+    		
+    	}
+    	
+    	castvys= Math.round(castvys*100000); //zaokrouhleni na 5 desetinych mist
+    	castvys=castvys/100000;
+    	
     	return Double.toString(castvys) ;
     }
     
     
          
     /**
-     * Univerzalni operace zpracovani +,*,/
+     * Univerzalni operace zpracovani binarnich operaci
      * @param op druh operace
      */
     private void unoperace(String op){
     	if (zadavamdo == 0 ) // zadavam prvni operaci
     	{
-    		prvnic=Components.vysledek.getText().toString();
-    		
-    		if (prvnic.isEmpty()){  //pokud necham prazdne misto
-    			Components.priklad.setText(Components.priklad.getText()+ "0" );
-        		prvnic="0";
+    		Components.priklad.setText("");
+    		if (Components.vysledek.getText().toString().isEmpty() || prvnic.equals("-")) //pokud prvni cislo nebylo zadano
+    		{
+    			prvnic="0";
+    			
     		}
-    		Components.priklad.setText(Components.vysledek.getText()+" "+op+" ");
+    		else{ //jinak nastavi prvni cislo
+    			prvnic=Components.vysledek.getText().toString();	
+    			
+    		} 		
+    		Components.priklad.setText(prvnic+" "+op+" ");
+    		Components.vysledek.setText("");
+    		druhec="";
     		zadavamdo=1;
     		operace=op;
     	}
-    	else if (zadavamdo == 1 && operace!="")
+    	else //jiz zadavam druhe cislo
     	{
-    		druhec=Components.vysledek.getText().toString();
-    		System.out.print(druhec);
-    		if (Components.vysledek.getText().isEmpty() || druhec.equals("-")){
-        		druhec="0";
+    		if(druhec.isEmpty()){//menim operaci
+    			if (operace.equals("yroot")){
+    				Components.priklad.setText(Components.priklad.getText().substring(0, Components.priklad.getText().length()-7));
+    			}
+    			else
+    			{
+    				Components.priklad.setText(Components.priklad.getText().substring(0, Components.priklad.getText().length()-3));
+    			}
+    			Components.priklad.setText(Components.priklad.getText() + " "+op+" ");
+    			operace=op;
     		}
-    		prvnic=vypocitej(prvnic,druhec,operace); 
+    		else {//uz delam dalsi operaci
+    		druhec=Components.vysledek.getText().toString();
+    		try{
+    			prvnic=vypocitej(prvnic,druhec,operace); 
+    		}
+    		catch (Exception e) {
+    			if (e.getMessage().equals("MathError")){
+    				Components.priklad.setText("MathError");
+    				Components.vysledek.setText("");
+    				prvnic="";
+    		    	druhec="";
+    		    	operace="";
+    		    	zadavamdo=0;
+    		    	return;
+    				
+    			}
+    			else {
+    				Components.priklad.setText("MathError");
+    				Components.vysledek.setText("");
+    				prvnic="";
+    		    	druhec="";
+    		    	operace="";
+    		    	zadavamdo=0;
+    		    	return;
+    				
+    			}
+    		}
     		Components.priklad.setText(Components.priklad.getText() + druhec +" "+op+" ");
     		operace=op;
     		druhec="";
-    		Components.vysledek.setText(prvnic);
-    		
-    	}
-    	else if (zadavamdo == 1 && operace.isEmpty())
-    	{
-    		prvnic=Components.vysledek.getText().toString(); 
-    		
-    		if (Components.vysledek.getText().isEmpty()){
-        		prvnic=Double.toString(castvys);
-        	}
-    		
-    		Components.priklad.setText(Components.priklad.getText() +" "+op+" ");
-    		operace=op;
-    	}
-    	else{
-    		//never
-    		
-    	}
-    }
-    private void plusPressed()
-    {
-    	unoperace("+");
-    }
-    
-    private void btnkratPressed()
-    {
-    	unoperace("*");
-    }
-    
-    private void btndelenoPressed()
-    {
-    	unoperace("/"); 	
-    }
-    
-    private void btn0Pressed()
-    {
-    	vypis("0");
-    }
-    
-    private void btn1Pressed()
-    {
-    	vypis("1");
-    }
-    
-    private void btn2Pressed()
-    {
-    	vypis("2");
-    }
-    
-    
-    private void btn3Pressed()
-    {
-    	vypis("3");
-    }
-    
-    private void btn4Pressed()
-    {
-    	vypis("4");
-    }
-    
-    private void btn5Pressed()
-    {
-    	vypis("5");
-    }
-    
-    private void btn6Pressed()
-    {
-    	vypis("6");
-    }
-    
-    private void btn7Pressed()
-    {
-    	vypis("7");
-    }
-    
-    private void btn8Pressed()
-    {
-    	vypis("8");
-    }
-    
-    private void btn9Pressed()
-    {
-    	vypis("9");
-    }
-    private void btnminPressed()
-    {
-    	if (prvnic.isEmpty() && zadavamdo == 0){
-    		prvnic="-";
-    		Components.vysledek.setText("-");
-    		
-    	}
-    	else if (zadavamdo==1 && druhec=="" && operace != "")
-    	{	
-    		druhec="-";
-    		Components.vysledek.setText("-");
-    	}
-    	else if (zadavamdo == 0 ){
-    		prvnic=Components.vysledek.getText().toString();
-    		Components.priklad.setText(Components.vysledek.getText()+" - ");
     		Components.vysledek.setText("");
-    		zadavamdo=1;
-    		operace="-";
+    		}
     	}
-    	else if (zadavamdo == 1 && operace!="")
-    	{
-    		druhec=Components.vysledek.getText().toString();
-    		prvnic=vypocitej(prvnic,druhec,operace); 
-    		Components.priklad.setText(Components.priklad.getText() + druhec +" - ");
-    		operace="-";
-    		druhec="";
-    		Components.vysledek.setText(prvnic);
-    		
-    	}
-    	else if (zadavamdo == 1 && operace.isEmpty() && Components.vysledek.getText()!="")
-    	{
-    		prvnic=Components.vysledek.getText().toString(); 
-    		Components.priklad.setText(Components.priklad.getText() +" - ");
-    		operace="-";
-    	}
-    	else{
-    		//chyba=1; rovna se
-    		
-    	}
-    	
-    	
     }
+   
     
     
-    private void btncarPressed()
-    {
-    	vypis(".");
-    }
+    
+   
     
     private void btnmoc2()
     {
-    	if (zadavamdo == 0 ){
-    		prvnic=Components.vysledek.getText().toString();
-    		Components.priklad.setText(Components.vysledek.getText()+" ^ ");
-    		zadavamdo=1;
-    		operace="^";
-    		druhec="2";
-    		rovnasePressed();
+    	rovnasePressed();
+    	prvnic=Components.vysledek.getText().toString();
+    	Components.priklad.setText(prvnic+" ^  2");
+    	druhec="2";
+    	try{
+    	Components.vysledek.setText(vypocitej(prvnic,druhec,"^")); 
     	}
-    	else if (zadavamdo == 1 && operace!="")
-    	{
-    		druhec=Components.vysledek.getText().toString();
-    		prvnic=vypocitej(prvnic,druhec,operace); 
-    		Components.priklad.setText(Components.priklad.getText() + druhec +" ^");
-    		operace="^";
-    		druhec="2";
-    		rovnasePressed();
+    	catch(Exception e){
+    		if (e.getMessage().equals("MathError")){
+				Components.priklad.setText("MathError");
+				Components.vysledek.setText("");
+				prvnic="";
+		    	druhec="";
+		    	operace="";
+		    	zadavamdo=0;
+		    	return;
+				
+			}
+			else {
+				Components.priklad.setText("MathError");
+				Components.vysledek.setText("");
+				prvnic="";
+		    	druhec="";
+		    	operace="";
+		    	zadavamdo=0;
+		    	return;
+				
+			}
     		
     	}
-    	else if (zadavamdo == 1 && operace.isEmpty() && Components.vysledek.getText()!="")
-    	{
-    		prvnic=Components.vysledek.getText().toString(); 
-    		Components.priklad.setText(Components.priklad.getText() +" ^");
-    		operace="^";
-    		druhec="2";
-    		rovnasePressed();
-    	}
-    	else{
-    		//chyba=1; rovna se
-    		
-    	}
+    	operace="";
+    	
     }
     private void btnmocn()
     {
-    	if (zadavamdo == 0 ){
-    		prvnic=Components.vysledek.getText().toString();
-    		Components.priklad.setText(Components.vysledek.getText()+" ^ ");
-    		zadavamdo=1;
-    		operace="^";
-    	}
-    	else if (zadavamdo == 1 && operace!="")
-    	{
-    		druhec=Components.vysledek.getText().toString();
-    		prvnic=vypocitej(prvnic,druhec,operace); 
-    		Components.priklad.setText(Components.priklad.getText() + druhec +" ^ ");
-    		operace="^";
-    		druhec="";
-    		Components.vysledek.setText(prvnic);
-    		
-    	}
-    	else if (zadavamdo == 1 && operace.isEmpty() && Components.vysledek.getText()!="")
-    	{
-    		prvnic=Components.vysledek.getText().toString(); 
-    		Components.priklad.setText(Components.priklad.getText() +" ^ ");
-    		operace="^";
-    	}
-    	else{
-    		//chyba=1; rovna se
-    		
-    	}
+    	unoperace("^");
     }
     /**
      * Funkce pro vypocet 2 odmocniny z x
      * @todo obraceny vypis
      */
     private void btnodm2()
-    {
-    	if (zadavamdo == 0 ){
-    		prvnic=Components.vysledek.getText().toString();
-    		Components.priklad.setText(Components.vysledek.getText()+ " yroot ");
-    		zadavamdo=1;
-    		operace="√";
-    		druhec="2";
-    		rovnasePressed();
+    { 
+    	rovnasePressed();
+    	prvnic=Components.vysledek.getText().toString();
+    	Components.priklad.setText(prvnic+" yroot  2");
+    	druhec="2";
+    	try{
+    	Components.vysledek.setText(vypocitej(prvnic,druhec,"yroot")); 
     	}
-    	else if (zadavamdo == 1 && operace!="")
-    	{
-    		druhec=Components.vysledek.getText().toString();
-    		prvnic=vypocitej(prvnic,druhec,operace); 
-    		Components.priklad.setText(Components.priklad.getText() + druhec +" yroot ");
-    		operace="√";
-    		druhec="2";
-    		rovnasePressed();
-    		
-    	}
-    	else if (zadavamdo == 1 && operace.isEmpty() && Components.vysledek.getText()!="")
-    	{
-    		prvnic=Components.vysledek.getText().toString(); 
-    		Components.priklad.setText(Components.priklad.getText() +" yroot ");
-    		operace="√";
-    		druhec="2";
-    		rovnasePressed();
-    	}
-    	else{
-    		//chyba=1; rovna se
+    	catch(Exception e){
+    		if (e.getMessage().equals("MathError")){
+				Components.priklad.setText("MathError");
+				Components.vysledek.setText("");
+				prvnic="";
+		    	druhec="";
+		    	operace="";
+		    	zadavamdo=0;
+		    	return;
+				
+			}
+			else {
+				Components.priklad.setText("MathError");
+				Components.vysledek.setText("");
+				prvnic="";
+		    	druhec="";
+		    	operace="";
+		    	zadavamdo=0;
+		    	return;
+				
+			}
     		
     	}
     }
@@ -527,32 +547,7 @@ public class CalcActionListener extends AbstractAction{
      */
     private void btnodmn()
     {
-    	if (zadavamdo == 0 ){
-    		prvnic=Components.vysledek.getText().toString();
-    		Components.priklad.setText( Components.vysledek.getText()+ " yroot " );
-    		zadavamdo=1;
-    		operace="√";
-    	}
-    	else if (zadavamdo == 1 && operace!="")
-    	{
-    		druhec=Components.vysledek.getText().toString();
-    		prvnic=vypocitej(prvnic,druhec,operace); 
-    		Components.priklad.setText(Components.priklad.getText() + druhec +" yroot ");
-    		operace="√";
-    		druhec="";
-    		Components.vysledek.setText(prvnic);
-    		
-    	}
-    	else if (zadavamdo == 1 && operace.isEmpty() && Components.vysledek.getText()!="")
-    	{
-    		prvnic=Components.vysledek.getText().toString(); 
-    		Components.priklad.setText(Components.priklad.getText() +" yroot ");
-    		operace="√";
-    	}
-    	else{
-    		//chyba=1; rovna se
-    		
-    	};
+    	unoperace("yroot");
     }
     private void btnCPressed()
     {
@@ -588,10 +583,16 @@ public class CalcActionListener extends AbstractAction{
     }
     private void btnAns()
     {
+    	if(zadavamdo==0){
+    		prvnic="";
+    	}
+    	else{
+    		druhec="";
+    	}
     	Components.vysledek.setText("");
     	vypis(Double.toString(castvys));
     }
-    private String cesta="";
+    
     private void btnodch(){
     	btnCPressed();
         int returnVal = Components.fc.showOpenDialog(null);
@@ -604,8 +605,111 @@ public class CalcActionListener extends AbstractAction{
     		
     	}
     	else{
-    		System.out.print(cesta);;
-    		Components.vysledek.setText(Double.toString(calclib.st_Dev(cesta)));
+    		System.out.print(cesta);
+    		try{
+    			Components.vysledek.setText(Double.toString(Calc_Lib.st_Dev(cesta)));
+    		}
+    		catch (Exception e)
+    		{
+    			if (e.getMessage().equals("MathError")){
+    				Components.priklad.setText("MathError");
+    				Components.vysledek.setText("");
+    				prvnic="";
+    		    	druhec="";
+    		    	operace="";
+    		    	zadavamdo=0;
+    		    	return;
+    				
+    			}
+    			else {
+    				Components.priklad.setText("MathError");
+    				Components.vysledek.setText("");
+    				prvnic="";
+    		    	druhec="";
+    		    	operace="";
+    		    	zadavamdo=0;
+    		    	return;
+    				
+    			}	
+	
+    		}
     	}
+    }
+    /**
+     * funkce pridava ci odebira znaminko - u zadavaneho cisla 
+     */
+    private void btnplmi(){
+    	if (zadavamdo == 0 ){
+    		if(prvnic.length()>0){
+    			if(prvnic.charAt(0)=='-'){
+    				prvnic=prvnic.substring(1);
+    			}
+    			else{
+    				prvnic="-"+prvnic;
+    			}
+    		}
+    		else
+    		{
+    			prvnic="-";
+    		}
+    	Components.vysledek.setText(prvnic);	
+    	}
+    	else{
+    		if(druhec.length()>0){
+    			if(druhec.charAt(0)=='-'){
+    				druhec=druhec.substring(1);
+    			}
+    			else{
+    				druhec="-"+druhec;
+    			}
+    		}
+    		else
+    		{
+    			druhec="-";
+    		}
+    		Components.vysledek.setText(druhec);	
+    		
+    	}
+    	
+    }
+    /**
+     * Funkce pro zpracovani argumentu pro faktorial
+     * volá funkci vypocitej s operaci !
+     */
+    private void btnfakt(){
+    	
+    	rovnasePressed();
+    	prvnic=Components.vysledek.getText().toString();
+    	Components.priklad.setText(prvnic+" ! ");
+    	druhec="0";
+    	try{
+    	Components.vysledek.setText(vypocitej(prvnic,druhec,"!")); 
+    	}
+    	catch(Exception e){
+    		if (e.getMessage().equals("MathError")){
+				Components.priklad.setText("MathError");
+				Components.vysledek.setText("");
+				prvnic="";
+		    	druhec="";
+		    	operace="";
+		    	zadavamdo=0;
+		    	return;
+				
+			}
+			else {
+				Components.priklad.setText("MathError");
+				Components.vysledek.setText("");
+				prvnic="";
+		    	druhec="";
+		    	operace="";
+		    	zadavamdo=0;
+		    	return;
+				
+			}
+    		
+    	}
+    	operace="";
+    	
+    	
     }
 }

@@ -70,6 +70,7 @@ public class Main_Window extends JFrame{
 		public JButton btnfakt;
 		public JButton btndeleno;
 		public JButton btnkrat;
+		public JButton btnplmi;
 		public JTextField priklad;
 		public JTextField vysledek;  
 		public JFileChooser fc;
@@ -105,6 +106,7 @@ public class Main_Window extends JFrame{
 	private JButton btnkrat = new JButton("*");
 	private JTextField priklad = new JTextField();
 	private JTextField vysledek = new JTextField();
+	private JButton btnplmi = new JButton("±");
 	
 	private CalcActionListener ActionListener;
 	private final JScrollPane scrollPane = new JScrollPane();
@@ -161,6 +163,7 @@ public class Main_Window extends JFrame{
 		CompContainer.priklad = priklad;
 		CompContainer.vysledek = vysledek;  
 		CompContainer.fc = fc;
+		CompContainer.btnplmi = btnplmi;
 		ActionListener = new CalcActionListener(CompContainer);
 	
 		
@@ -193,7 +196,7 @@ public class Main_Window extends JFrame{
 		btn0.setFont(new Font("Tahoma", Font.PLAIN, 30));
 		
 		
-		btn0.setBounds(10, 599, 190, 60);
+		btn0.setBounds(110, 599, 90, 60);
 		btn0.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put( KeyStroke.getKeyStroke( "NUMPAD0" ), "num0" );
 		btn0.getActionMap().put( "num0", ActionListener );
 		btn0.addActionListener(ActionListener);
@@ -395,6 +398,12 @@ public class Main_Window extends JFrame{
 		vysledek.setColumns(10);
 		vysledek.setBorder(javax.swing.BorderFactory.createEmptyBorder());
 		vysledek.setEditable(false);
+		
+		
+		btnplmi.setFont(new Font("Tahoma", Font.PLAIN, 30));
+		btnplmi.setBounds(10, 598, 90, 60);
+		btnplmi.addActionListener(ActionListener);
+		contentPane.add(btnplmi);
 		
 		
 		
