@@ -18,7 +18,13 @@ public class CalcActionListener extends AbstractAction{
 
 	private static final long serialVersionUID = 1L;
 	
-	Main_Window.ComponentContainer Components;
+	 private String prvnic =""; //prvni zadavane cislo
+	 private String druhec =""; //druhe zadavane cislo
+	 private String operace=""; //zvolena operace
+	 private Integer zadavamdo=0; //uzivatel prave zapisuje bud prvni nebo druhe cislo 
+	 private String posledniplatny=""; //posledni platny vysledek
+	 private Long factorial; //vypocteny factorial
+     Main_Window.ComponentContainer Components;
 
     /**
      * Konstruktor
@@ -129,17 +135,101 @@ public class CalcActionListener extends AbstractAction{
     	{
     		btnodch();
     	}
+    	else if(e.getSource().equals(Components.btnplmi))
+    	{
+    		btnplmi();
+    	}
+    	else if(e.getSource().equals(Components.btnfakt))
+    	{
+    		btnfakt();
+    	}
+    	
     	else{
     		System.out.print("toto se nemelo stat");
     	}
     }
-    private String prvnic ="";
-    private String druhec ="";
-    private String operace="";
-    private Integer zadavamdo=0;
-  
+    /**
+     * zavola univerzalni operaci pro nastaveni operace -
+     */
+    private void btnminPressed()
+    {
+    	unoperace("-");
+    }
+    
+    private void plusPressed()
+    {
+    	unoperace("+");
+    }
+    
+    private void btnkratPressed()
+    {
+    	unoperace("*");
+    }
+    
+    private void btndelenoPressed()
+    {
+    	unoperace("/"); 	
+    }
+    
+    private void btn0Pressed()
+    {
+    	vypis("0");
+    }
+    
+    private void btn1Pressed()
+    {
+    	vypis("1");
+    }
+    
+    private void btn2Pressed()
+    {
+    	vypis("2");
+    }
+    
+    
+    private void btn3Pressed()
+    {
+    	vypis("3");
+    }
+    
+    private void btn4Pressed()
+    {
+    	vypis("4");
+    }
+    
+    private void btn5Pressed()
+    {
+    	vypis("5");
+    }
+    
+    private void btn6Pressed()
+    {
+    	vypis("6");
+    }
+    
+    private void btn7Pressed()
+    {
+    	vypis("7");
+    }
+    
+    private void btn8Pressed()
+    {
+    	vypis("8");
+    }
+    
+    private void btn9Pressed()
+    {
+    	vypis("9");
+    }
+    
+    private void btncarPressed()
+    {
+    	vypis(".");
+    }
+    
     private void rovnasePressed()
     {
+    	if (operace.equals("!")){operace="";}
     	if (druhec.isEmpty()){
     		if (Components.vysledek.getText().isEmpty()){
     			Components.priklad.setText(Components.priklad.getText()+ "0" );
@@ -159,11 +249,21 @@ public class CalcActionListener extends AbstractAction{
     		Components.priklad.setText(Components.vysledek.getText());
     	}
     	else{
-    	Components.vysledek.setText(vypocitej(prvnic,druhec,operace));
+    	try{
+    	posledniplatny=vypocitej(prvnic,druhec,operace);
+    	}
+    	catch (Exception e){
+    		
+    		
+    	}
+    	
+    	Components.vysledek.setText(posledniplatny);
+    	//Components.priklad.setText("");
     	operace="";
     	prvnic="";
     	druhec="";
-    	zadavamdo=1;
+    	zadavamdo=0;
+    	
     	}
     	
     }
@@ -209,6 +309,7 @@ public class CalcActionListener extends AbstractAction{
      */
     private String vypocitej(String prvni, String druhe, String operace)
     {
+    	System.out.print("op:"+operace);
     	for(int i = 0; i < prvni.length(); i++)
     	{
     		if (prvni.charAt(i)=='.'){poccarek+=1;}
@@ -320,7 +421,7 @@ public class CalcActionListener extends AbstractAction{
     		}
     		
     	}
-    	else if(operace == "√"){
+    	else if(operace == "yroot"){
     		System.out.print(prvni+"to bzlo prvni nasleduje druhe :");
     		System.out.print(druhe + "konec");
     		try
@@ -334,268 +435,114 @@ public class CalcActionListener extends AbstractAction{
     		}
     		
     	}
+    	
+    	else if(operace.equals("!")){
+    		System.out.print(prvni+"to bzlo prvni nasleduje druhe :");
+    		System.out.print(druhe + "konec");
+    		System.out.print("tujsem");
+    		try
+    		{ 
+    			
+    			factorial = Calc_Lib.factorial(Long.parseLong( String.format( "%.0f",Double.valueOf(prvni))));
+    			System.out.print(factorial +":fact");
+    			castvys= factorial.doubleValue();
+    		}
+    		catch (Exception e)
+    		{
+    			Components.vysledek.setText("MathError");	
+    			System.out.println("Tadyproblem");
+    		}
+    		
+    	}
     	return Double.toString(castvys) ;
     }
     
     
          
     /**
-     * Univerzalni operace zpracovani +,*,/
+     * Univerzalni operace zpracovani +,*,/,-
      * @param op druh operace
      */
     private void unoperace(String op){
     	if (zadavamdo == 0 ) // zadavam prvni operaci
     	{
-    		prvnic=Components.vysledek.getText().toString();
-    		
-    		if (prvnic.isEmpty()){  //pokud necham prazdne misto
-    			Components.priklad.setText(Components.priklad.getText()+ "0" );
-        		prvnic="0";
+    		Components.priklad.setText("");
+    		if (Components.vysledek.getText().toString().isEmpty() || prvnic.equals("-")) //pokud prvni cislo nebylo zadano
+    		{
+    			prvnic="0";
+    			
     		}
-    		Components.priklad.setText(Components.vysledek.getText()+" "+op+" ");
+    		else{ //jinak nastavi prvni cislo
+    			prvnic=Components.vysledek.getText().toString();	
+    			
+    		} 		
+    		Components.priklad.setText(prvnic+" "+op+" ");
+    		Components.vysledek.setText("");
+    		druhec="";
     		zadavamdo=1;
     		operace=op;
     	}
-    	else if (zadavamdo == 1 && operace!="")
+    	else //jizzadavam druhe cislo
     	{
-    		druhec=Components.vysledek.getText().toString();
-    		System.out.print(druhec);
-    		if (Components.vysledek.getText().isEmpty() || druhec.equals("-")){
-        		druhec="0";
+    		if(druhec.isEmpty()){//menim operaci
+    			Components.priklad.setText(Components.priklad.getText().substring(0, Components.priklad.getText().length()-3));
+    			Components.priklad.setText(Components.priklad.getText() + " "+op+" ");
+    			operace=op;
     		}
-    		prvnic=vypocitej(prvnic,druhec,operace); 
+    		else {//uz delam dalsi operaci
+    		druhec=Components.vysledek.getText().toString();
+    		try{
+    			prvnic=vypocitej(prvnic,druhec,operace); 
+    		}
+    		catch (Exception e) {
+    			Components.vysledek.setText("Neplatné číslo");	
+    		}
     		Components.priklad.setText(Components.priklad.getText() + druhec +" "+op+" ");
     		operace=op;
     		druhec="";
-    		Components.vysledek.setText(prvnic);
-    		
-    	}
-    	else if (zadavamdo == 1 && operace.isEmpty())
-    	{
-    		prvnic=Components.vysledek.getText().toString(); 
-    		
-    		if (Components.vysledek.getText().isEmpty()){
-        		prvnic=Double.toString(castvys);
-        	}
-    		
-    		Components.priklad.setText(Components.priklad.getText() +" "+op+" ");
-    		operace=op;
-    	}
-    	else{
-    		//never
-    		
-    	}
-    }
-    private void plusPressed()
-    {
-    	unoperace("+");
-    }
-    
-    private void btnkratPressed()
-    {
-    	unoperace("*");
-    }
-    
-    private void btndelenoPressed()
-    {
-    	unoperace("/"); 	
-    }
-    
-    private void btn0Pressed()
-    {
-    	vypis("0");
-    }
-    
-    private void btn1Pressed()
-    {
-    	vypis("1");
-    }
-    
-    private void btn2Pressed()
-    {
-    	vypis("2");
-    }
-    
-    
-    private void btn3Pressed()
-    {
-    	vypis("3");
-    }
-    
-    private void btn4Pressed()
-    {
-    	vypis("4");
-    }
-    
-    private void btn5Pressed()
-    {
-    	vypis("5");
-    }
-    
-    private void btn6Pressed()
-    {
-    	vypis("6");
-    }
-    
-    private void btn7Pressed()
-    {
-    	vypis("7");
-    }
-    
-    private void btn8Pressed()
-    {
-    	vypis("8");
-    }
-    
-    private void btn9Pressed()
-    {
-    	vypis("9");
-    }
-    private void btnminPressed()
-    {
-    	if (prvnic.isEmpty() && zadavamdo == 0){
-    		prvnic="-";
-    		Components.vysledek.setText("-");
-    		
-    	}
-    	else if (zadavamdo==1 && druhec=="" && operace != "")
-    	{	
-    		druhec="-";
-    		Components.vysledek.setText("-");
-    	}
-    	else if (zadavamdo == 0 ){
-    		prvnic=Components.vysledek.getText().toString();
-    		Components.priklad.setText(Components.vysledek.getText()+" - ");
     		Components.vysledek.setText("");
-    		zadavamdo=1;
-    		operace="-";
+    		}
     	}
-    	else if (zadavamdo == 1 && operace!="")
-    	{
-    		druhec=Components.vysledek.getText().toString();
-    		prvnic=vypocitej(prvnic,druhec,operace); 
-    		Components.priklad.setText(Components.priklad.getText() + druhec +" - ");
-    		operace="-";
-    		druhec="";
-    		Components.vysledek.setText(prvnic);
-    		
-    	}
-    	else if (zadavamdo == 1 && operace.isEmpty() && Components.vysledek.getText()!="")
-    	{
-    		prvnic=Components.vysledek.getText().toString(); 
-    		Components.priklad.setText(Components.priklad.getText() +" - ");
-    		operace="-";
-    	}
-    	else{
-    		//chyba=1; rovna se
-    		
-    	}
-    	
-    	
     }
+   
     
     
-    private void btncarPressed()
-    {
-    	vypis(".");
-    }
+    
+   
     
     private void btnmoc2()
     {
-    	if (zadavamdo == 0 ){
-    		prvnic=Components.vysledek.getText().toString();
-    		Components.priklad.setText(Components.vysledek.getText()+" ^ ");
-    		zadavamdo=1;
-    		operace="^";
-    		druhec="2";
-    		rovnasePressed();
+    	rovnasePressed();
+    	prvnic=Components.vysledek.getText().toString();
+    	Components.priklad.setText(prvnic+" ^  2");
+    	druhec="2";
+    	try{
+    	Components.vysledek.setText(vypocitej(prvnic,druhec,"^")); 
     	}
-    	else if (zadavamdo == 1 && operace!="")
-    	{
-    		druhec=Components.vysledek.getText().toString();
-    		prvnic=vypocitej(prvnic,druhec,operace); 
-    		Components.priklad.setText(Components.priklad.getText() + druhec +" ^");
-    		operace="^";
-    		druhec="2";
-    		rovnasePressed();
+    	catch(Exception e){
     		
     	}
-    	else if (zadavamdo == 1 && operace.isEmpty() && Components.vysledek.getText()!="")
-    	{
-    		prvnic=Components.vysledek.getText().toString(); 
-    		Components.priklad.setText(Components.priklad.getText() +" ^");
-    		operace="^";
-    		druhec="2";
-    		rovnasePressed();
-    	}
-    	else{
-    		//chyba=1; rovna se
-    		
-    	}
+    	operace="";
+    	
     }
     private void btnmocn()
     {
-    	if (zadavamdo == 0 ){
-    		prvnic=Components.vysledek.getText().toString();
-    		Components.priklad.setText(Components.vysledek.getText()+" ^ ");
-    		zadavamdo=1;
-    		operace="^";
-    	}
-    	else if (zadavamdo == 1 && operace!="")
-    	{
-    		druhec=Components.vysledek.getText().toString();
-    		prvnic=vypocitej(prvnic,druhec,operace); 
-    		Components.priklad.setText(Components.priklad.getText() + druhec +" ^ ");
-    		operace="^";
-    		druhec="";
-    		Components.vysledek.setText(prvnic);
-    		
-    	}
-    	else if (zadavamdo == 1 && operace.isEmpty() && Components.vysledek.getText()!="")
-    	{
-    		prvnic=Components.vysledek.getText().toString(); 
-    		Components.priklad.setText(Components.priklad.getText() +" ^ ");
-    		operace="^";
-    	}
-    	else{
-    		//chyba=1; rovna se
-    		
-    	}
+    	unoperace("^");
     }
     /**
      * Funkce pro vypocet 2 odmocniny z x
      * @todo obraceny vypis
      */
     private void btnodm2()
-    {
-    	if (zadavamdo == 0 ){
-    		prvnic=Components.vysledek.getText().toString();
-    		Components.priklad.setText(Components.vysledek.getText()+ " yroot ");
-    		zadavamdo=1;
-    		operace="√";
-    		druhec="2";
-    		rovnasePressed();
+    { 
+    	rovnasePressed();
+    	prvnic=Components.vysledek.getText().toString();
+    	Components.priklad.setText(prvnic+" yroot  2");
+    	druhec="2";
+    	try{
+    	Components.vysledek.setText(vypocitej(prvnic,druhec,"yroot")); 
     	}
-    	else if (zadavamdo == 1 && operace!="")
-    	{
-    		druhec=Components.vysledek.getText().toString();
-    		prvnic=vypocitej(prvnic,druhec,operace); 
-    		Components.priklad.setText(Components.priklad.getText() + druhec +" yroot ");
-    		operace="√";
-    		druhec="2";
-    		rovnasePressed();
-    		
-    	}
-    	else if (zadavamdo == 1 && operace.isEmpty() && Components.vysledek.getText()!="")
-    	{
-    		prvnic=Components.vysledek.getText().toString(); 
-    		Components.priklad.setText(Components.priklad.getText() +" yroot ");
-    		operace="√";
-    		druhec="2";
-    		rovnasePressed();
-    	}
-    	else{
-    		//chyba=1; rovna se
+    	catch(Exception e){
     		
     	}
     }
@@ -605,32 +552,7 @@ public class CalcActionListener extends AbstractAction{
      */
     private void btnodmn()
     {
-    	if (zadavamdo == 0 ){
-    		prvnic=Components.vysledek.getText().toString();
-    		Components.priklad.setText( Components.vysledek.getText()+ " yroot " );
-    		zadavamdo=1;
-    		operace="√";
-    	}
-    	else if (zadavamdo == 1 && operace!="")
-    	{
-    		druhec=Components.vysledek.getText().toString();
-    		prvnic=vypocitej(prvnic,druhec,operace); 
-    		Components.priklad.setText(Components.priklad.getText() + druhec +" yroot ");
-    		operace="√";
-    		druhec="";
-    		Components.vysledek.setText(prvnic);
-    		
-    	}
-    	else if (zadavamdo == 1 && operace.isEmpty() && Components.vysledek.getText()!="")
-    	{
-    		prvnic=Components.vysledek.getText().toString(); 
-    		Components.priklad.setText(Components.priklad.getText() +" yroot ");
-    		operace="√";
-    	}
-    	else{
-    		//chyba=1; rovna se
-    		
-    	};
+    	unoperace("yroot");
     }
     private void btnCPressed()
     {
@@ -666,6 +588,12 @@ public class CalcActionListener extends AbstractAction{
     }
     private void btnAns()
     {
+    	if(zadavamdo==0){
+    		prvnic="";
+    	}
+    	else{
+    		druhec="";
+    	}
     	Components.vysledek.setText("");
     	vypis(Double.toString(castvys));
     }
@@ -692,5 +620,58 @@ public class CalcActionListener extends AbstractAction{
 	
     		}
     	}
+    }
+    /**
+     * funkce pridava ci odebira znaminko - u zadavaneho cisla 
+     */
+    private void btnplmi(){
+    	if (zadavamdo == 0 ){
+    		if(prvnic.length()>0){
+    			if(prvnic.charAt(0)=='-'){
+    				prvnic=prvnic.substring(1);
+    			}
+    			else{
+    				prvnic="-"+prvnic;
+    			}
+    		}
+    		else
+    		{
+    			prvnic="-";
+    		}
+    	Components.vysledek.setText(prvnic);	
+    	}
+    	else{
+    		if(druhec.length()>0){
+    			if(druhec.charAt(0)=='-'){
+    				druhec=druhec.substring(1);
+    			}
+    			else{
+    				druhec="-"+druhec;
+    			}
+    		}
+    		else
+    		{
+    			druhec="-";
+    		}
+    		Components.vysledek.setText(druhec);	
+    		
+    	}
+    	
+    }
+    private void btnfakt(){
+    	
+    	rovnasePressed();
+    	prvnic=Components.vysledek.getText().toString();
+    	Components.priklad.setText(prvnic+" ! ");
+    	druhec="0";
+    	try{
+    	Components.vysledek.setText(vypocitej(prvnic,druhec,"!")); 
+    	}
+    	catch(Exception e){
+    		
+    	}
+    	operace="";
+    	
+    	
     }
 }
