@@ -1,6 +1,8 @@
 package pckg;
 
 import java.awt.event.ActionEvent;
+import java.util.concurrent.TimeUnit;
+
 import javax.swing.*;
 
 
@@ -20,6 +22,7 @@ public class CalcActionListener extends AbstractAction{
 
     /**
      * Konstruktor
+     * 
      */
     public CalcActionListener( Main_Window.ComponentContainer container){
     	Components = container;
@@ -29,8 +32,6 @@ public class CalcActionListener extends AbstractAction{
      * Odchytávač signálů
      */
     public void actionPerformed(ActionEvent e) {
-    	
-    	//System.out.print(e.getSource().equals(b2));
     	
     	if(e.getSource().equals(Components.btnrov))
     	{
@@ -166,6 +167,7 @@ public class CalcActionListener extends AbstractAction{
     	}
     	
     }
+    
     /**
      * Funkce pro vypisováni čísel jednak do GUI, ale také do příslušné proměné
      * @param cislo Cislo, které se má vypsat
@@ -197,7 +199,7 @@ public class CalcActionListener extends AbstractAction{
     
     private double castvys=0;
     private Integer poccarek=0;
-    private Calc_Lib calclib = new Calc_Lib();
+ //   private Calc_Lib calclib = new Calc_Lib();
     /**
      * funkce pro volani příslušných mat. funkcí
      * @param prvni prvni argument pro vypocet
@@ -212,7 +214,17 @@ public class CalcActionListener extends AbstractAction{
     		if (prvni.charAt(i)=='.'){poccarek+=1;}
     	}
     	if (poccarek>1){
-    		poccarek=0;return "Neplatne cislo";
+    		poccarek=0;
+    		
+    		Components.vysledek.setText("Neplatné číslo");
+    		
+    		try {
+				TimeUnit.SECONDS.sleep(1);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+    		btnCPressed();
+    		return "";
     		}
     	else{poccarek=0;}
     	for(int i = 0; i < druhe.length(); i++)
@@ -220,7 +232,16 @@ public class CalcActionListener extends AbstractAction{
     		if (druhe.charAt(i)=='.'){poccarek+=1;}
     	}
     	if (poccarek>1){
-    		poccarek=0;return "Neplatne cislo";
+    		poccarek=0;
+    		
+    		Components.vysledek.setText("Nemplatné číslo");
+    		try {
+				TimeUnit.SECONDS.sleep(1);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+    		btnCPressed();
+    		return "";
     		}else{poccarek=0;}	
     		
     	if (prvni.isEmpty() || prvni.equals("-")){prvni="0";}
@@ -233,28 +254,85 @@ public class CalcActionListener extends AbstractAction{
     	if (operace == "+"){
     		System.out.print(prvni+"to bzlo prvni nasleduje druhe :");
     		System.out.print(druhe + "konec");
-    		castvys = calclib.add(Double.valueOf(prvni), Double.valueOf(druhe));
+    		try
+    		{
+    			castvys = Calc_Lib.add(Double.valueOf(prvni), Double.valueOf(druhe));
+    		}
+    		catch (Exception e)
+    		{
+    			Components.vysledek.setText("MathError");
+    			
+    		}
+    		
+    			
+    				
     	}
     	else if(operace == "-"){
     		System.out.print(prvni+"to bzlo prvni nasleduje druhe :");
     		System.out.print(druhe + "konec");
     		
     		System.out.print(Double.valueOf(prvni));
-    		castvys = calclib.sub(Double.valueOf(prvni), Double.valueOf(druhe));
+    		
+    		try
+    		{
+    			castvys = Calc_Lib.sub(Double.valueOf(prvni), Double.valueOf(druhe));
+    		}
+    		catch (Exception e)
+    		{
+    			Components.vysledek.setText("MathError");		
+    			
+    		}
+    		//castvys = calclib.sub(Double.valueOf(prvni), Double.valueOf(druhe));
     	}
     	else if(operace == "*"){
-    		castvys = calclib.mult(Double.valueOf(prvni), Double.valueOf(druhe));
+    		try
+    		{
+    			castvys = Calc_Lib.mult(Double.valueOf(prvni), Double.valueOf(druhe));
+    		}
+    		catch (Exception e)
+    		{
+    			Components.vysledek.setText("MathError");
+    			
+    		}
+    		
     	}
     	else if(operace == "/"){
-    		castvys = calclib.divide(Double.valueOf(prvni), Double.valueOf(druhe));
+    		try
+    		{
+    			castvys = Calc_Lib.divide(Double.valueOf(prvni), Double.valueOf(druhe));
+    		}
+    		catch (Exception e)
+    		{
+    			Components.vysledek.setText("MathError");
+    			
+    		}
+    		
     	}
     	else if(operace == "^"){
-    		castvys = calclib.power(Double.valueOf(prvni), Double.valueOf(druhe));
+    		try
+    		{
+    			castvys = Calc_Lib.power(Double.valueOf(prvni), Double.valueOf(druhe));
+    		}
+    		catch (Exception e)
+    		{
+    			Components.vysledek.setText("MathError");
+    			
+    		}
+    		
     	}
     	else if(operace == "√"){
     		System.out.print(prvni+"to bzlo prvni nasleduje druhe :");
     		System.out.print(druhe + "konec");
-    		castvys = calclib.root( Double.valueOf(prvni),Double.valueOf(druhe));
+    		try
+    		{
+    			castvys = Calc_Lib.root( Double.valueOf(prvni),Double.valueOf(druhe));
+    		}
+    		catch (Exception e)
+    		{
+    			Components.vysledek.setText("MathError");	
+	
+    		}
+    		
     	}
     	return Double.toString(castvys) ;
     }
@@ -604,8 +682,15 @@ public class CalcActionListener extends AbstractAction{
     		
     	}
     	else{
-    		System.out.print(cesta);;
-    		Components.vysledek.setText(Double.toString(calclib.st_Dev(cesta)));
+    		System.out.print(cesta);
+    		try{
+    			Components.vysledek.setText(Double.toString(Calc_Lib.st_Dev(cesta)));
+    		}
+    		catch (Exception e)
+    		{
+    			Components.vysledek.setText("MathError");	
+	
+    		}
     	}
     }
 }
