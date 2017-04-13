@@ -17,7 +17,7 @@ import javax.swing.*;
 public class CalcActionListener extends AbstractAction{
 
 	private static final long serialVersionUID = 1L;
-	
+	 private String str = ""; //pro spr8vnou funkci tlačítka Del
 	 private String prvnic =""; //prvni zadavane cislo
 	 private String druhec =""; //druhe zadavane cislo
 	 private String operace=""; //zvolena operace
@@ -122,7 +122,7 @@ public class CalcActionListener extends AbstractAction{
     	}
     	else if(e.getSource().equals(Components.btnmocn))
     	{
-    		btnmocn();
+    		unoperace("^");
     	}
     	else if(e.getSource().equals(Components.btnodm2))
     	{
@@ -130,7 +130,7 @@ public class CalcActionListener extends AbstractAction{
     	}
     	else if(e.getSource().equals(Components.btnodmocn))
     	{
-    		btnodmn();
+    		unoperace("yroot");
     	}
     	else if(e.getSource().equals(Components.btnAns))
     	{
@@ -180,26 +180,8 @@ public class CalcActionListener extends AbstractAction{
     	posledniplatny=vypocitej(prvnic,druhec,operace);
     	}
     	catch (Exception e){
-    		if (e.getMessage().equals("MathError")){
-				Components.priklad.setText("MathError");
-				Components.vysledek.setText("");
-				prvnic="";
-		    	druhec="";
-		    	operace="";
-		    	zadavamdo=0;
-		    	return;
-				
-			}
-			else {
-				Components.priklad.setText("MathError");
-				Components.vysledek.setText("");
-				prvnic="";
-		    	druhec="";
-		    	operace="";
-		    	zadavamdo=0;
-		    	return;
-				
-			}
+    		exeption_handler(e); //volaní exception_handler pro reseni výjimky
+    		return;
     		
     	}
     	
@@ -247,6 +229,8 @@ public class CalcActionListener extends AbstractAction{
  //   private Calc_Lib calclib = new Calc_Lib();
     /**
      * funkce pro volani příslušných mat. funkcí
+     * při volani odchytávana výjimka pro pozdější zpracovanání
+     * před dosazením hodnot parsovani příslušých stringů
      * @param prvni prvni argument pro vypocet
      * @param druhe druhy argument pro vypocet
      * @param operace operace ktera se ma provest 
@@ -281,10 +265,7 @@ public class CalcActionListener extends AbstractAction{
     	{
     		poccarek=0;
     	}	
-    	
     	if (operace == "+"){
-    		//System.out.print(prvni+"to bzlo prvni nasleduje druhe :");
-    		//System.out.print(druhe + "konec");
     		try
     		{
     			castvys = Calc_Lib.add(Double.valueOf(prvni), Double.valueOf(druhe));
@@ -293,16 +274,8 @@ public class CalcActionListener extends AbstractAction{
     		{
     			throw new Exception("MathError");
     		}
-    		
-    			
-    				
     	}
-    	else if(operace == "-"){
-    		System.out.print(prvni+"to bzlo prvni nasleduje druhe :");
-    		System.out.print(druhe + "konec");
-    		
-    		System.out.print(Double.valueOf(prvni));
-    		
+    	else if(operace == "-"){    		
     		try
     		{
     			castvys = Calc_Lib.sub(Double.valueOf(prvni), Double.valueOf(druhe));
@@ -310,7 +283,6 @@ public class CalcActionListener extends AbstractAction{
     		catch (Exception e)
     		{
     			throw new Exception("MathError");		
-    			
     		}
     	}
     	else if(operace == "*"){
@@ -325,15 +297,12 @@ public class CalcActionListener extends AbstractAction{
     		
     	}
     	else if(operace == "/"){
-    		System.out.print("cislo1:"+prvni+" nasleduje druhe :");
-    		System.out.print(druhe + "konec");
     		try
     		{
     			castvys = Calc_Lib.divide(Double.valueOf(prvni), Double.valueOf(druhe));
     		}
     		catch (Exception e)
     		{
-    			System.out.print("zachcenzmatiky");
     			throw new Exception("MathError");   			
     		}
     		
@@ -364,19 +333,14 @@ public class CalcActionListener extends AbstractAction{
     	}
     	
     	else if(operace.equals("!")){
-    		System.out.print(prvni+"to bzlo prvni nasleduje druhe :");
-    		System.out.print(druhe + "konec");
-    		System.out.print("tujsem");
     		try
     		{ 
-    			
-    			factorial = Calc_Lib.factorial(Long.parseLong( String.format( "%.0f",Double.valueOf(prvni))));
-    			System.out.print(factorial +":fact");
+    			factorial = Calc_Lib.factorial(Long.parseLong( String.format( "%.0f",Double.valueOf(prvni))));//parsovani double na long
     			castvys= factorial.doubleValue();
     		}
     		catch (Exception e)
     		{
-    			throw new Exception("MathError");
+    			throw new Exception("MathError");//vyhozeni prislusne výjimky pro pozdější zpracování
     		}
     		
     	}
@@ -431,26 +395,8 @@ public class CalcActionListener extends AbstractAction{
     			prvnic=vypocitej(prvnic,druhec,operace); 
     		}
     		catch (Exception e) {
-    			if (e.getMessage().equals("MathError")){
-    				Components.priklad.setText("MathError");
-    				Components.vysledek.setText("");
-    				prvnic="";
-    		    	druhec="";
-    		    	operace="";
-    		    	zadavamdo=0;
-    		    	return;
-    				
-    			}
-    			else {
-    				Components.priklad.setText("MathError");
-    				Components.vysledek.setText("");
-    				prvnic="";
-    		    	druhec="";
-    		    	operace="";
-    		    	zadavamdo=0;
-    		    	return;
-    				
-    			}
+    			exeption_handler(e); //volaní exception_handler pro reseni výjimky
+        		return;
     		}
     		Components.priklad.setText(Components.priklad.getText() + druhec +" "+op+" ");
     		operace=op;
@@ -475,35 +421,13 @@ public class CalcActionListener extends AbstractAction{
     	Components.vysledek.setText(vypocitej(prvnic,druhec,"^")); 
     	}
     	catch(Exception e){
-    		if (e.getMessage().equals("MathError")){
-				Components.priklad.setText("MathError");
-				Components.vysledek.setText("");
-				prvnic="";
-		    	druhec="";
-		    	operace="";
-		    	zadavamdo=0;
-		    	return;
-				
-			}
-			else {
-				Components.priklad.setText("MathError");
-				Components.vysledek.setText("");
-				prvnic="";
-		    	druhec="";
-		    	operace="";
-		    	zadavamdo=0;
-		    	return;
-				
-			}
-    		
+    		exeption_handler(e); //volaní exception_handler pro reseni výjimky
+    		return;    		
     	}
     	operace="";
     	
     }
-    private void btnmocn()
-    {
-    	unoperace("^");
-    }
+    
     /**
      * Funkce pro vypocet 2 odmocniny z x
      * @todo obraceny vypis
@@ -518,36 +442,9 @@ public class CalcActionListener extends AbstractAction{
     	Components.vysledek.setText(vypocitej(prvnic,druhec,"yroot")); 
     	}
     	catch(Exception e){
-    		if (e.getMessage().equals("MathError")){
-				Components.priklad.setText("MathError");
-				Components.vysledek.setText("");
-				prvnic="";
-		    	druhec="";
-		    	operace="";
-		    	zadavamdo=0;
-		    	return;
-				
-			}
-			else {
-				Components.priklad.setText("MathError");
-				Components.vysledek.setText("");
-				prvnic="";
-		    	druhec="";
-		    	operace="";
-		    	zadavamdo=0;
-		    	return;
-				
-			}
-    		
+    		exeption_handler(e); //volaní exception_handler pro reseni výjimky
+    		return;
     	}
-    }
-    /**
-     * Funkce pro vypocet n odmocniny z x
-     * @todo obraceny vypis
-     */
-    private void btnodmn()
-    {
-    	unoperace("yroot");
     }
     private void btnCPressed()
     {
@@ -559,7 +456,7 @@ public class CalcActionListener extends AbstractAction{
     	zadavamdo=0;
     }
     
-    private String str = "";
+    
     private void btnbackspace()
     {
     	if (zadavamdo==0){
@@ -611,27 +508,8 @@ public class CalcActionListener extends AbstractAction{
     		}
     		catch (Exception e)
     		{
-    			if (e.getMessage().equals("MathError")){
-    				Components.priklad.setText("MathError");
-    				Components.vysledek.setText("");
-    				prvnic="";
-    		    	druhec="";
-    		    	operace="";
-    		    	zadavamdo=0;
-    		    	return;
-    				
-    			}
-    			else {
-    				Components.priklad.setText("MathError");
-    				Components.vysledek.setText("");
-    				prvnic="";
-    		    	druhec="";
-    		    	operace="";
-    		    	zadavamdo=0;
-    		    	return;
-    				
-    			}	
-	
+    			exeption_handler(e); //volaní exception_handler pro reseni výjimky
+        		return;	
     		}
     	}
     }
@@ -686,29 +564,39 @@ public class CalcActionListener extends AbstractAction{
     	Components.vysledek.setText(vypocitej(prvnic,druhec,"!")); 
     	}
     	catch(Exception e){
-    		if (e.getMessage().equals("MathError")){
-				Components.priklad.setText("MathError");
-				Components.vysledek.setText("");
-				prvnic="";
-		    	druhec="";
-		    	operace="";
-		    	zadavamdo=0;
-		    	return;
-				
-			}
-			else {
-				Components.priklad.setText("MathError");
-				Components.vysledek.setText("");
-				prvnic="";
-		    	druhec="";
-		    	operace="";
-		    	zadavamdo=0;
-		    	return;
-				
-			}
     		
+    		exeption_handler(e); //volaní exception_handler pro reseni výjimky
+    		return;
     	}
     	operace="";
+    	
+    	
+    }
+    /**
+     * Funkce pro centralní zpracovaní výjimek
+     * @param e výjimka pro zpracovani
+     */
+    private void exeption_handler(Exception e){
+    	if (e.getMessage().equals("MathError")){
+			Components.priklad.setText("MathError");
+			Components.vysledek.setText("");
+			prvnic="";
+	    	druhec="";
+	    	operace="";
+	    	zadavamdo=0;
+	    	return;
+			
+		}
+		else {
+			Components.priklad.setText("Neplatná hodnota");
+			Components.vysledek.setText("");
+			prvnic="";
+	    	druhec="";
+	    	operace="";
+	    	zadavamdo=0;
+	    	return;
+			
+		}
     	
     	
     }
