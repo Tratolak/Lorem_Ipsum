@@ -148,12 +148,15 @@ public class CalcActionListener extends AbstractAction{
     	{
     		btnfakt();
     	}
-    	
-    	else{
-    		System.out.print("toto se nemelo stat"); //nenastane kazde tlacitko je osetreno
+    	else if(e.getSource().equals(Components.btnHelp))
+    	{
+    		final String napoveda = "<html>   <h2>Funkce kalckulačky: </h2>   <table>      <tr>         <td>  Operace:  </td>         <td> Znak</td>         <td>  Podmínky: </td>      </tr>    <tr>         <td>sčítání</td>         <td>+</td>         <td>---</td>      </tr>      <tr>         <td>odčítání</td>         <td>-</td>         <td>---</td>      </tr>      <tr>         <td>násobení</td>         <td>*</td>         <td>---</td>      </tr>      <tr>         <td>dělení</td>         <td>/</td>         <td>Nelze dělit nulou.</td>      </tr>      <tr>         <td>n-tá mocnina</td>         <td>xⁿ</td>         <td>---</td>      </tr>      <tr>         <td>druhá mocnina</td>         <td>x²</td>         <td>---</td>      </tr>      <tr>         <td>druhá odmocnina</td>         <td>√ᵪ</td>         <td>Nelze vypočítat odmocninu se záporného čísla.</td>      </tr>      <tr>         <td>n-tá odmocnina</td>         <td> ⁿ√ᵪ</td>         <td>Nelze vypočítat odmocninu se záporného čísla.</td>      </tr>      <tr>         <td>směrodatná odcdylka</td>         <td>σ</td>         <td>Při neplatném souboru se výpočet neprovede.</td>      <tr>         <td>faktoriál</td>         <td>!</td>         <td>Nelze vypočítat faktoriál se záporného čísla.</td>      </tr>   </table>   <p>      Při výpočtu je výraz hodnocen z leva do prava -> nejsou upřednostněny operace násobení, dělení, faktoriál, mocnina a odmocnina před sčítáním a odčítáním.    </p>   <p>Zadaný výraz je vyhodnocen až po kliknutí na tlačítko '=', případně po zmáčknutí klávesy ENTER.</p></html>";    		
+    		Main_Window.infoBox(napoveda);    	
+    	}    	    	
+    	else{    		
+    		System.out.print("toto se nemelo stat"); //nenastane se, kazde tlacitko je osetreno    }    
     	}
     }
-    
     private void rovnasePressed()
     {
     	if (operace.equals("!")){operace="";}
@@ -422,7 +425,7 @@ public class CalcActionListener extends AbstractAction{
     	}
     	catch(Exception e){
     		exeption_handler(e); //volaní exception_handler pro reseni výjimky
-    		return;    		
+    		    		
     	}
     	operace="";
     	
@@ -443,7 +446,7 @@ public class CalcActionListener extends AbstractAction{
     	}
     	catch(Exception e){
     		exeption_handler(e); //volaní exception_handler pro reseni výjimky
-    		return;
+    		
     	}
     }
     private void btnCPressed()
@@ -509,7 +512,7 @@ public class CalcActionListener extends AbstractAction{
     		catch (Exception e)
     		{
     			exeption_handler(e); //volaní exception_handler pro reseni výjimky
-        		return;	
+        			
     		}
     	}
     }
@@ -566,7 +569,6 @@ public class CalcActionListener extends AbstractAction{
     	catch(Exception e){
     		
     		exeption_handler(e); //volaní exception_handler pro reseni výjimky
-    		return;
     	}
     	operace="";
     	
@@ -584,7 +586,6 @@ public class CalcActionListener extends AbstractAction{
 	    	druhec="";
 	    	operace="";
 	    	zadavamdo=0;
-	    	return;
 			
 		}
 		else {
@@ -594,7 +595,6 @@ public class CalcActionListener extends AbstractAction{
 	    	druhec="";
 	    	operace="";
 	    	zadavamdo=0;
-	    	return;
 			
 		}
     	
