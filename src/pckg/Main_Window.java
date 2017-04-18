@@ -74,6 +74,7 @@ public class Main_Window extends JFrame{
 		public JTextField priklad;
 		public JTextField vysledek;  
 		public JFileChooser fc;
+		public JButton btnHelp;
 	 }
 
 	private Main_Window.ComponentContainer CompContainer = new Main_Window.ComponentContainer();
@@ -111,6 +112,8 @@ public class Main_Window extends JFrame{
 	private CalcActionListener ActionListener;
 	private final JScrollPane scrollPane = new JScrollPane();
 	private final JFileChooser fc = new JFileChooser();
+	private final JMenuBar menuBar = new JMenuBar();
+	private final JButton btnHelp = new JButton("Nápověda");
 	/**
 	 * Spuštìní aplikace
 	 */
@@ -127,12 +130,12 @@ public class Main_Window extends JFrame{
 		});
 	}
 	/**
-	 * Vytvoøení frame a inicializace signálù
+	 * Vytvoření frame a inicializace signálù
 	 */
 	public Main_Window() {
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 415, 700);
+		setBounds(100, 100, 415, 722);
 		
 		
 		CompContainer.btnrov = btnrov;
@@ -164,6 +167,7 @@ public class Main_Window extends JFrame{
 		CompContainer.vysledek = vysledek;  
 		CompContainer.fc = fc;
 		CompContainer.btnplmi = btnplmi;
+		CompContainer.btnHelp= btnHelp;
 		ActionListener = new CalcActionListener(CompContainer);
 	
 		
@@ -178,6 +182,19 @@ public class Main_Window extends JFrame{
 		btnrov.setBounds(310, 528, 90, 130);
 		btnrov.setFont(new Font("Tahoma", Font.PLAIN, 40));
 		btnrov.addActionListener(ActionListener);
+		
+		
+		setJMenuBar(menuBar);
+		JMenu ck= new JMenu();
+		menuBar.add(ck);
+		menuBar.add(btnHelp);
+		btnHelp.addActionListener(ActionListener);
+		
+		
+	
+
+		
+		
 		
 		contentPane.setBorder(new EmptyBorder(0, 0, 0, 0));
 		setContentPane(contentPane);
@@ -407,5 +424,14 @@ public class Main_Window extends JFrame{
 		
 		
 		
+	} // konen funkce Main_Window
+	
+	/**
+	 * Funkce vytvářející Dialog okno pro nápovědu
+	 * @param zprava zprava ktera bude zobrazena v nápovědě
+	 */
+	public static void infoBox(String zprava)
+	{
+	    JOptionPane.showMessageDialog(null, zprava, "Nápověda", JOptionPane.INFORMATION_MESSAGE);
 	}
 }
