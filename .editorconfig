@@ -8,6 +8,6 @@ charset = utf-8
 end_of_line = lf
 insert_final_newline = true
 
-[*.{java,class}]
+[*.{java}]
 indent_style = tab
 trim_trailing_whitespace = true
