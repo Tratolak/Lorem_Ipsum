@@ -1,10 +1,10 @@
 # Základní údaje
-**Lorem Ipsum** - IVS 2017 Kalkulačka
+**Lorem Ipsum** - IVS 2017 Kalkulačka <br />
 [GitHub Repozitář](https://github.com/Tratolak/Lorem_Ipsum/)
 
 # Prostředí
-Windows 32bit
-Widnows 64bit
+* Windows 32bit
+* Widnows 64bit
 
 # Autoři
 Lorem Ipsum
