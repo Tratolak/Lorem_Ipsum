@@ -1,4 +1,4 @@
-xstodu08 25
-xolsak00 25
-xsvand06 25
-xschne07 25
+xstodu08 100
+xolsak00 100
+xsvand06 100
+xschne07 100
