@@ -1,26 +1,26 @@
-"Name","Total Time","Total Time (CPU)","Invocations"
-"main","1,420 ms (-0%)","1,281 ms (-0%)","1"
-" proftest.Calc_Lib.main (String[])","1,420 ms (-0%)","1,281 ms (-0%)","1"
-"  proftest.Calc_Lib.STDEV1000000 ()","1,011 ms (-0%)","983 ms (-0%)","1"
-"   proftest.Calc_Lib.st_Dev (String)","1,011 ms (-0%)","983 ms (-0%)","1"
-"    Self time","511 ms (-0%)","616 ms (-0%)","1"
-"    proftest.Calc_Lib.power (double, double)","359 ms (-0%)","173 ms (-0%)","1,000,000"
-"    proftest.Calc_Lib.add (double, double)","99.7 ms (-0%)","81.8 ms (-0%)","2,000,000"
-"    proftest.Calc_Lib.sub (double, double)","40.1 ms (-0%)","111 ms (-0%)","1,000,000"
-"    proftest.Calc_Lib.root (double, double)","0.007 ms (-0%)","0.0 ms (0%)","1"
-"     proftest.Calc_Lib.power (double, double)","0.003 ms (-0%)","0.0 ms (0%)","14"
-"     Self time","0.003 ms (-0%)","0.0 ms (0%)","1"
-"    proftest.Calc_Lib.divide (double, double)","0.003 ms (-0%)","0.0 ms (0%)","2"
-"   Self time","0.004 ms (-0%)","0.0 ms (0%)","1"
-"  proftest.Calc_Lib.STDEV100000 ()","408 ms (-0%)","298 ms (-0%)","1"
-"   proftest.Calc_Lib.st_Dev (String)","408 ms (-0%)","298 ms (-0%)","1"
-"    Self time","336 ms (-0%)","266 ms (-0%)","1"
-"    proftest.Calc_Lib.power (double, double)","46.6 ms (-0%)","15.8 ms (-0%)","100,000"
-"    proftest.Calc_Lib.add (double, double)","16.9 ms (-0%)","31.6 ms (-0%)","200,000"
-"    proftest.Calc_Lib.sub (double, double)","8.87 ms (-0%)","0.0 ms (0%)","100,000"
-"    proftest.Calc_Lib.root (double, double)","0.019 ms (-0%)","0.0 ms (0%)","1"
-"     Self time","0.015 ms (-0%)","0.0 ms (0%)","1"
-"     proftest.Calc_Lib.power (double, double)","0.004 ms (-0%)","0.0 ms (0%)","14"
-"    proftest.Calc_Lib.divide (double, double)","0.003 ms (-0%)","0.0 ms (0%)","2"
-"   Self time","0.085 ms (-0%)","0.0 ms (0%)","1"
-"  Self time","0.296 ms (-0%)","0.0 ms (0%)","1"
+Name,Total Time,Total Time (CPU),Invocations,
+main,"1,420 ms (-0%)","1,281 ms (-0%)",1,
+ proftest.Calc_Lib.main (String[]),"1,420 ms (-0%)","1,281 ms (-0%)",1,
+  proftest.Calc_Lib.STDEV1000000 (),"1,011 ms (-0%)",983 ms (-0%),1,1 000 000 prvkù
+   proftest.Calc_Lib.st_Dev (String),"1,011 ms (-0%)",983 ms (-0%),1,
+    Self time,511 ms (-0%),616 ms (-0%),1,
+"    proftest.Calc_Lib.power (double, double)",359 ms (-0%),173 ms (-0%),1000000,
+"    proftest.Calc_Lib.add (double, double)",99.7 ms (-0%),81.8 ms (-0%),2000000,
+"    proftest.Calc_Lib.sub (double, double)",40.1 ms (-0%),111 ms (-0%),1000000,
+"    proftest.Calc_Lib.root (double, double)",0.007 ms (-0%),0.0 ms (0%),1,
+"     proftest.Calc_Lib.power (double, double)",0.003 ms (-0%),0.0 ms (0%),14,
+     Self time,0.003 ms (-0%),0.0 ms (0%),1,
+"    proftest.Calc_Lib.divide (double, double)",0.003 ms (-0%),0.0 ms (0%),2,
+   Self time,0.004 ms (-0%),0.0 ms (0%),1,
+  proftest.Calc_Lib.STDEV100000 (),408 ms (-0%),298 ms (-0%),1,100 000 prvkù
+   proftest.Calc_Lib.st_Dev (String),408 ms (-0%),298 ms (-0%),1,
+    Self time,336 ms (-0%),266 ms (-0%),1,
+"    proftest.Calc_Lib.power (double, double)",46.6 ms (-0%),15.8 ms (-0%),100000,
+"    proftest.Calc_Lib.add (double, double)",16.9 ms (-0%),31.6 ms (-0%),200000,
+"    proftest.Calc_Lib.sub (double, double)",8.87 ms (-0%),0.0 ms (0%),100000,
+"    proftest.Calc_Lib.root (double, double)",0.019 ms (-0%),0.0 ms (0%),1,
+     Self time,0.015 ms (-0%),0.0 ms (0%),1,
+"     proftest.Calc_Lib.power (double, double)",0.004 ms (-0%),0.0 ms (0%),14,
+"    proftest.Calc_Lib.divide (double, double)",0.003 ms (-0%),0.0 ms (0%),2,
+   Self time,0.085 ms (-0%),0.0 ms (0%),1,
+  Self time,0.296 ms (-0%),0.0 ms (0%),1,
