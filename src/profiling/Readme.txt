@@ -1,0 +1,1 @@
+Testovaci data se generuji pomoci spusteni GenerateFiles.exe
