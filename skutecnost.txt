@@ -1,0 +1,6 @@
+Pøedstava byla, že nám volba jazyka (Java) usnadní práci, jelikož jde o benevolentní jazyk, který je podobný syntaxí jazyku C.
+Samotná implementace sice byla bez vìtších problémù, ale všechno okolo se neobešlo bez zádrhelu. 
+
+2 hlavní problémy:
+- fakt že Java je na pùl kompilovaná/intepretovaná (problémy s makefile)
+- vyhledání nástrojù pro Javu (nìkteré jsou zastaralé, nìkteré nefungují vùbec s urèitým IDE)
