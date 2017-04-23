@@ -1,6 +1,4 @@
 # Makefile, IVS, Lorem Ipsum
-# Je potřeba dodělat doxygen (aby generoval PDF do ./doc/dokumentace.pdf)
-# Make run si aktuálně stěžuje, že chybí main.
 
 JC = javac
 JFLAGS = -g
@@ -26,7 +24,7 @@ IVS_Calc:
 	rm -rf ../$(COBJ_DIR)
 	mkdir ../$(COBJ_DIR)
 	cd ../$(JAVA_DIR)/pckg; $(JC) $(JFLAGS) -d ../../$(COBJ_DIR) $(JAVA_SRC)
-	cd ../$(COBJ_DIR)/pckg; jar cvf ../$(JAR_NAME).jar *.class
+	cd ../$(COBJ_DIR)/pckg; jar cfe ../$(JAR_NAME).jar pckg.Main_Window *.class
 
 # zabalí projekt tak aby mohl být odevzdán
 pack: ../dokumentace.pdf
@@ -35,8 +33,7 @@ pack: ../dokumentace.pdf
 	cd ..; zip -r repo.zip .
 	mkdir ../zip ../zip/repo
 	cd ..; mv repo.zip zip/repo/repo.zip; cd zip/repo; unzip repo.zip; rm repo.zip
-	#mkdir ../zip/doc ; mv ../dokumentace.pdf zip/doc/dokumentace.pdf
-	cd ../zip; mkdir doc; echo "" > doc/empty
+	mkdir ../zip/doc; cp ../dokumentace.pdf ../zip/doc/dokumentace.pdf
 	cd ../zip; mkdir install; echo "" > install/empty
 	cd ../zip ; zip -r ../$(GROUP_NAME).zip .
 	$(RM) ../zip
@@ -57,9 +54,13 @@ test:
 doc:
 	$(RM) ../doc ../dokumentace.pdf
 	cd ../$(JAVA_DIR); doxygen Doxyfile
-	mv ../doc/refman.pdf ../dokumentace.pdf
+	cd ../doc/latex; \
+		latex refman.tex; \
+		dvips refman.dvi; \
+		ps2pdf refman.ps
+	mv ../doc/latex/refman.pdf ../dokumentace.pdf
 	$(RM) ../doc
 
 # spustí program
 run:
-	cd ../bin; java $(JAR_NAME).jar
+	cd ../bin; java -jar $(JAR_NAME).jar
